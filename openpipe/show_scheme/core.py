@@ -24,6 +24,11 @@ class DirInfo:
     path: str = ""
 
 
+def get_path_to_current_show_scheme():
+    return os.path.join(CURRENT_DIR, "schema", SHOW_SCHEME_VERSION,
+                        "showscheme.openpipe")
+
+
 def parse_dir_tree_schema_line(line):
     """Parses a line of a 'show scheme' and returns the information that were
     retrieve as DirInfo instances
@@ -53,13 +58,13 @@ def parse_dir_tree_schema_line(line):
     return dir_info
 
 
-def detect_indent(line):
+def detect_indent(line, spaces_for_a_tab=4):
     count = 0
     for char in line:
         if char == " ":
             count += 1
         elif char == "\t":
-            count += 4
+            count += spaces_for_a_tab
         else:
             break
     return count
@@ -140,8 +145,7 @@ def create_project(project_name, root_path):
             sys.exit(1)
 
     # Gather schema
-    schema_path = os.path.join(CURRENT_DIR, "schema", SHOW_SCHEME_VERSION,
-                               "showscheme.openpipe")
+    schema_path = get_path_to_current_show_scheme()
     log.info("Reading schema from %s", schema_path)
 
     dirs_to_create = read_directories_from_schema(schema_path)
