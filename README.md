@@ -1,6 +1,6 @@
 # Open-Pipe
 
-[![license](https://img.shields.io/github/license/vvzen/open-pipe)](https://github.com/vvzen/open-pipe/blob/main/LICENSE) [![coverage](https://img.shields.io/codecov/c/github/vvzen/open-pipe)](https://app.codecov.io/gh/vvzen/open-pipe)
+[![license](https://img.shields.io/github/license/vvzen/open-pipe)](https://github.com/vvzen/open-pipe/blob/main/LICENSE) [![coverage](https://img.shields.io/codecov/c/github/vvzen/open-pipe)](https://app.codecov.io/gh/vvzen/open-pipe) ![Generic badge](https://img.shields.io/badge/status-wip-yellow.svg)
 
 (Horribly WIP) Set of modular python tools meant to cover the most common operations needed when setting up a VFX / animation pipeline.
 
