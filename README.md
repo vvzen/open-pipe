@@ -11,7 +11,7 @@ Prefer a style inspired by functional programming (receive input, produce output
 
 2. Remember: exceptions are part of the interface of a function! Only add them when needed.
 
-3. Prefer structs to classes. Prefer using DataClass containers to store data, don't add methods to them unless you feel you need to model something quite advanced. It's better to have a simple struct that is manipulated by a function, that having a class that manipulates itself (once again, favour a functional approach)
+3. Prefer structs to classes. Prefer using `dataclass` containers to store data, don't add methods to them unless you feel you need to model something quite advanced. It's better to have a simple struct that is manipulated by a function, than a class that manipulates itself and has to keep track of internal properties (once again, favour a functional approach)
 
 4. Avoid multiple inheritance like the plague. Use Mixins if needed (but only if reeaaally needed - like for Qt stuff)
 
@@ -24,6 +24,12 @@ Prefer a style inspired by functional programming (receive input, produce output
 1. When choosing abstractions, pick the one that it's easier to test. The less boilerplate code is needed to test something, the better.
 
 2. Use TDD when it makes sense. This helps keep a clean API and focuses on shipping useful features while providing an intuitive interface. TDD does not means lack of design – if used carefully, TDD works best to help you guide towards the most practical abstractions.
+
+### Functions should be easily retriable
+
+1. Try to make things [idempotent](https://en.wikipedia.org/wiki/Idempotence) when it's possible. This makes it easier to run tests in isolation while always keeping a clean state.
+
+2. When things fail, try to make the failure as localized as possible. Tear down any potential change that you might have applied before the failure, in order to remove side effects.
 
 ### Use schemas to limit responsibilities
 
