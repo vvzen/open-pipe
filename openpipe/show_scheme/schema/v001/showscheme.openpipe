@@ -1,0 +1,21 @@
+root
+    tmp 777 sticky
+    asset 775
+    io 775
+        in 777
+            editorial 777
+            production 777
+            shoot 777
+        out 775
+            delivery 775
+    pipeline 775
+        bin 775
+        etc 775
+        color 775
+            installed 775
+                library 775
+        houdini 775
+        maya 775
+        nuke 775
+        python 775
+        var 775
