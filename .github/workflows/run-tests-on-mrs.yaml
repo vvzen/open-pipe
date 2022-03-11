@@ -20,7 +20,7 @@ jobs:
       - name: Update coverage
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.xml
           flags: unittests # optional
           name: codecov-umbrella # optional
