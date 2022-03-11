@@ -17,11 +17,13 @@ Prefer a style inspired by functional programming (receive input, produce output
 
 5. If you're only accessing `self` a few times, it doesn't need to be a class.
 
+6. If it looks simple, then probably it is simple. Don't be tempted to wrap things in a class just to make it look "professional" - always first write your implementation as a function.
+
 ### Tests are first class citizens
 
 1. When choosing abstractions, pick the one that it's easier to test. The less boilerplate code is needed to test something, the better.
 
-2. Use TDD when it makes sense. This helps keep a clean API and focuses on shipping the right features and an intuitive interface. TDD does not means lack of design – if used carefully, TDD works best to help you guide towards the right abstractions.
+2. Use TDD when it makes sense. This helps keep a clean API and focuses on shipping useful features while providing an intuitive interface. TDD does not means lack of design – if used carefully, TDD works best to help you guide towards the most practical abstractions.
 
 ### Use schemas to limit responsibilities
 
@@ -29,7 +31,8 @@ Prefer a style inspired by functional programming (receive input, produce output
 
 2. When possible, make CLIs that feed from stdin instead of files. Favour `cat something.txt | my-app` rather than `my-app --input-file something.txt`, unless you have a very good reason not to.
 
+3. Always version your schemas.
 
 ### Treat the consumer of your API with respect
 
-1. "We're all condescending adults". Simplify when needed, but don't oversimplify and take decisions instead of your users - always leave them flexibility to act the want they want. Once again, communicate using schemas instead.
+1. "We're all condescending adults". Simplify when needed, but don't oversimplify and take decisions instead of your users - always leave them flexibility to act the want they want. Once again, receive and return from your programs using shared schemas instead.
