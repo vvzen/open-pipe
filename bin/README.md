@@ -20,7 +20,7 @@ While any more 'serious' script that has to be portable/POSIX-compliant will be 
 
 Fish also has good support for variable scoping.
 
-The intention of OpenPipe currently is to use bash for heavy lifting back-end stuff, and fish for anything that it's user-facing.
+The intention of OpenPipe currently is to use bash for heavy lifting back-end stuff, and fish for anything that is user-facing.
 
 Further reading:
 - https://betterprogramming.pub/fish-vs-zsh-vs-bash-reasons-why-you-need-to-switch-to-fish-4e63a66687eb
