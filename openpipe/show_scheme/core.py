@@ -5,11 +5,11 @@ import stat
 import dataclasses
 from collections import deque
 
-import openpipe.logging
+import openpipe.log
 from openpipe.sanitization.core import name_for_filesystem
 from openpipe.constant import SHOW_SCHEME_VERSION
 
-log = openpipe.logging.get_logger('project.core')
+log = openpipe.log.get_logger('project.core')
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 SCHEMA_LINE_REGEX = re.compile(

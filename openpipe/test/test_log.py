@@ -1,4 +1,4 @@
-from openpipe.logging import get_logger
+from openpipe.log import get_logger
 
 def test_get_logger_only_returns_one_logger():
     logger_1 = get_logger("my-awesome-logger")
