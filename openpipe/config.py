@@ -15,8 +15,8 @@ def get_config_path(name):
 
     current_config_path = os.getenv("OPENPIPE_CONFIG_PATH")
     if not current_config_path:
-        log.warning("OPENPIPE_CONFIG_PATH is not defined, can't search.")
-        return
+        raise EnvironmentError("OPENPIPE_CONFIG_PATH is not defined, "
+                               "can't search.")
 
     matching_files = []
     paths_to_search = current_config_path.split(":")
