@@ -45,10 +45,10 @@ def get_naming_regexes(name):
         for pattern in patterns:
             for other_pattern in other_entry_patterns:
                 regexes_patterns.append(
-                    "^" + other_pattern + appends_with + pattern + "$")
+                    "^(" + other_pattern + appends_with + pattern + ")$")
     else:
         for pattern in patterns:
-            regexes_patterns.append("^" + pattern + "$")
+            regexes_patterns.append("^(" + pattern + ")$")
 
     if not regexes_patterns:
         return
