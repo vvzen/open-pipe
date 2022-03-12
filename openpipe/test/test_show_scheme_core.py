@@ -1,8 +1,4 @@
-import os
-import sys
-
 import pytest
-from pyfakefs import fake_filesystem
 
 from openpipe.show_scheme.core import (DirInfo, parse_dir_tree_schema_line,
                                        detect_indent, create_project,
