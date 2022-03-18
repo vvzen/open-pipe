@@ -1,6 +1,2 @@
-coverage==6.3.2
-pyfakefs==4.5.5
-pytest-cov==3.0.0
-pytest==7.0.1
 tomli==2.0.*
 six
