@@ -52,7 +52,11 @@ with open(config_path, "r") as f:
 ## Binaries
 ### op
 
-#### Implement 'op show'
+#### Implement 'op show' (DONE)
 
-It should show the environment of the current directory.
-Probably equivalent to something like `pwd | get-context`.
+<del>It should show the environment of the current directory</del>.
+<del>Probably equivalent to something like `pwd | get-context`.</del>
+
+This was implemented `Fri Mar 18 17:40:15 GMT 2022` under `op show-env`.
+
+It will show the environment where you `go`ed to last.
