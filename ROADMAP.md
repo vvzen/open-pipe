@@ -1,5 +1,8 @@
 # TODO
 
+A list of development goals and tasks which I want to address in the future.
+Items marked with (DONE) have been completed.
+
 ## General
 ### Implement a 'deactivate' type of script for source_me.fish & source_me.bash
 
@@ -7,10 +10,10 @@ This should remove any changes that the sourcing of these files brought to the e
 The is similar to how a `conda deactivate` works, or a `module unload` (for tcl modules)
 
 
-### Understand if yaml is a good choice for configs
+### Understand if yaml is a good choice for configs (DONE)
 
 In Framestore we use yaml since it provides better readability compared to JSON.
-However, support for parsing `yaml` doesn't ship with the standard library of python, which means that to use `op` one would first need to install `pyyaml` for the current python, which is not optimal.
+However, support for parsing `yaml` doesn't ship with the standard library of python, which means that to use `op` one would first need to install `pyyaml` for their current python, which is not optimal.
 
 I want to reduce the burden and chaos introduced by vendoring third-party libraries as much as possible, and as such, I mostly see 2 options:
 
@@ -49,5 +52,7 @@ with open(config_path, "r") as f:
 ## Binaries
 ### op
 
-#### Implement op show
+#### Implement 'op show'
+
 It should show the environment of the current directory.
+Probably equivalent to something like `pwd | get-context`.
