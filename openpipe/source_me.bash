@@ -1,8 +1,9 @@
-# Source this file to append the library to your pythonpath
+# Source this file to append the components of this library to the relevant paths
 
-new_python_path=$(realpath ..)
+this_dir=$(realpath $(dirname $0))
+new_python_path="$this_dir"
 
-if [ -z $PYTHONPATH ]; then
+if [ -z "$PYTHONPATH" ]; then
     export PYTHONPATH="$new_python_path"
 else
     python_path_already_appended=$(echo $PYTHONPATH | grep $new_python_path -c)
@@ -13,9 +14,9 @@ else
     fi
 fi
 
-new_config_path=$(realpath ./openpipe/configs)
+new_config_path="$this_dir/openpipe/configs"
 
-if [ -z $OPENPIPE_CONFIG_PATH ]; then
+if [ -z "$OPENPIPE_CONFIG_PATH" ]; then
     export OPENPIPE_CONFIG_PATH="$new_config_path"
 else
     config_path_already_appended=$(echo $OPENPIPE_CONFIG_PATH | grep $config_path_already_appended -c)
