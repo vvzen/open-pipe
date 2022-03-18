@@ -36,6 +36,7 @@ function _go
     end
 
     # Parse destination directory to understand environment
+    echo $destination_path | get-context
 
     # Set environment variables
     set --global --export --prepend --path OPENPIPE_CONFIG_PATH $destination_path
