@@ -5,9 +5,9 @@ import openpipe.naming
 
 @dataclasses.dataclass
 class OpenPipeContext:
-    show: str
-    sequence: str
-    shot: str
+    show: str = None
+    sequence: str = None
+    shot: str = None
 
 
 def make_context_from_path(path):
@@ -36,6 +36,10 @@ def make_context_from_path(path):
                 if not shot_match:
                     continue
 
+                # Shots have to be children of sequences
+                if not openpipe.naming.is_sequence(path_tokens[index-1]):
+                    continue
+
                 shot_name = shot_match.group()
                 break
 
@@ -51,6 +55,22 @@ def make_context_from_path(path):
                 # in the future via some type of hooks.
                 show_name = path_tokens[index-1]
                 break
+
+    # We couldn't find any sequence/shot, check if we're at the show level
+    if not any([show_name, sequence_name, shot_name]):
+        # If at least one sequence here matches the sequence regex,
+        # then we must be at the root of the show
+        current_dirs = os.listdir(path)
+        for dir_name in current_dirs:
+            if openpipe.naming.is_sequence(dir_name):
+                show_name = os.path.basename(path)
+                break
+
+        # Last resort:
+        # Look for the pipeline/etc directory, which is where openpipe
+        # stores its configuration files
+        if os.path.exists(os.path.join(path, "openpipe", "etc")):
+            show_name = os.path.basename(path)
 
     context = OpenPipeContext(show=show_name,
                               sequence=sequence_name,
