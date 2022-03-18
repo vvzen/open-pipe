@@ -1,12 +1,59 @@
 # README
 
-## op: A no frills filesystem navigation script written in fish
+## op: A no-frills filesystem navigation script written in fish
+
+#### Prerequisites
+
+Op is built on top of `fish`, the shell for people that love elegance and shells.
+
+For more info on how to install `fish`, please see: https://fishshell.com
+
+The TL;DR for installing is:
+
+On Mac, using brew:
+```bash
+$ brew install fish
+```
+
+On Ubuntu:
+```bash
+$ sudo apt-add-repository ppa:fish-shell/release-3
+$ sudo apt update
+$ sudo apt install fish
+```
+
+On Centos 7:
+```bash
+$ cd /etc/yum.repos.d/
+$ wget https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_7/shells:fish:release:3.repo
+$ yum install fish
+```
+
+On Debian 10:
+```bash
+$ echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_10/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+$ curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_10/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+$ sudo apt update
+$ sudo apt install fish
+```
+
+On Windows, using WSL, just follow the instructions for the relevant linux distro you installed.
 
 ### How to use
 
 From a terminal where `$SHELL` is `fish`, simply create an alias called 'op', that sources the `op.fish` file, like this:
 ```
-alias op="source /whereever/you/installed/open-pipe/openpipe/bin/op.fish"
+alias op="source /whereever/you/installed/open-pipe/openpipe/bin/op/op.fish"
+```
+
+### Example commands
+
+```fish
+# Go to a shot
+$ op go sc010/sc010_0010
+
+# Show info on the environment
+$ op show
 ```
 
 ### Why fish?
