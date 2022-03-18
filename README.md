@@ -16,7 +16,7 @@ Prefer a style inspired by functional programming (receive input, produce output
 
 3. Prefer structs to classes. Prefer using `dataclass` containers to store data, don't add methods to them unless you feel you need to model something quite advanced. It's better to have a simple struct that is manipulated by a function, than a class that manipulates itself and has to keep track of internal properties (once again, favour a functional approach)
 
-4. Avoid multiple inheritance like the plague. Use Mixins if needed (but only if reeaaally needed - like for Qt stuff)
+4. Avoid multiple inheritance like <del>the plague</del> covid. Use Mixins if needed (but only if reeaaally needed - like for Qt stuff)
 
 5. If you're only accessing `self` a few times, it doesn't need to be a class.
 
@@ -44,4 +44,4 @@ Prefer a style inspired by functional programming (receive input, produce output
 
 ### Treat the consumer of your API with respect
 
-1. "We're all condescending adults". Simplify when needed, but don't oversimplify and take decisions instead of your users - always leave them flexibility to act the want they want. Once again, receive and return from your programs using shared schemas instead.
+1. "We're all condescending adults". Simplify when needed, but don't oversimplify and take decisions instead of your users - always leave them flexibility to act the way they want. Once again, receive and return from your programs using shared schemas instead.

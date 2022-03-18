@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+"""
+This module hosts a simple CLI that is fed with a path via stdin and prints to stdout
+the detected pipeline environment.
+
+EXAMPLE USAGE
+
+$ echo "/some/path/sc010/sc010_0010" | get-context
+will print
+OPENPIPE_SHOW=/some/path,OPENPIPE_SEQUENCE=sc0010,OPENPIPE_SHOT=sc0010_0010
+
+$ echo -e "/some/path/sc010/sc010_0010\n/some/path/sc010/sc010_0020" | get-context
+will print
+OPENPIPE_SHOW=path,OPENPIPE_SEQUENCE=sc010,OPENPIPE_SHOT=sc010_0010
+OPENPIPE_SHOW=path,OPENPIPE_SEQUENCE=sc010,OPENPIPE_SHOT=sc010_0020
+"""
+
+import sys
+
+import openpipe.log
+from openpipe.context import make_context_from_path
+
+
+def main():
+
+    lines = sys.stdin.readlines()
+
+    for line in lines:
+        path = line.strip()
+        context = make_context_from_path(path)
+
+        show = context.show if context.show else "unknown"
+        sys.stdout.write("OPENPIPE_SHOW=%s," % show)
+
+        sequence = context.sequence if context.sequence else "unknown"
+        sys.stdout.write("OPENPIPE_SEQUENCE=%s," % sequence)
+
+        shot = context.shot if context.shot else "unknown"
+        sys.stdout.write("OPENPIPE_SHOT=%s" % shot)
+
+        sys.stdout.write("\n")
+
+
+if __name__ == "__main__":
+    main()

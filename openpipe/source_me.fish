@@ -1,10 +1,31 @@
-# Source this file to append the library to your pythonpath
-set new_python_path (realpath .)
-set is_already_appended (echo $PYTHONPATH | grep $new_python_path -c)
+# Source this file when you're doing dev stuff!
 
-if test $is_already_appended -eq 1
-    echo "variable is already set, skipping"
-    exit 1
+# Set the PATH
+set new_path (realpath ./bin)
+set path_is_already_appended (echo $PATH | grep $new_path -c)
+
+if test $path_is_already_appended -eq 1
+    echo "PATH is already set, skipping"
+else
+    set --global --export --prepend --path PATH $new_path
 end
 
-set --global --export --prepend --path PYTHONPATH $new_python_path
+# Set the PYTHONPATH
+set new_python_path (realpath .)
+set pythopath_is_already_appended (echo $PYTHONPATH | grep $new_python_path -c)
+
+if test $pythopath_is_already_appended -eq 1
+    echo "PYTHONPATH is already set, skipping"
+else
+    set --global --export --prepend --path PYTHONPATH $new_python_path
+end
+
+# Set the config path
+set new_config_path (realpath (dirname (status -f))/configs)
+set config_already_appended (echo $OPENPIPE_CONFIG_PATH | grep $new_config_path -c)
+
+if test $config_already_appended -eq 1
+    echo "OPENPIPE_CONFIG_PATH is already set, skipping"
+else
+    set --global --export --prepend --path OPENPIPE_CONFIG_PATH $new_config_path
+end
