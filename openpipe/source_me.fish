@@ -1,5 +1,15 @@
 # Source this file when you're doing dev stuff!
 
+# Set the PATH
+set new_path (realpath ./bin)
+set path_is_already_appended (echo $PATH | grep $new_path -c)
+
+if test $path_is_already_appended -eq 1
+    echo "PATH is already set, skipping"
+else
+    set --global --export --prepend --path PATH $new_path
+end
+
 # Set the PYTHONPATH
 set new_python_path (realpath .)
 set pythopath_is_already_appended (echo $PYTHONPATH | grep $new_python_path -c)
