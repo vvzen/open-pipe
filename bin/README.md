@@ -84,7 +84,7 @@ Further reading:
 ## get-context: A simple CLI for retrieving contexts from paths (python)
 
 The aim of `get-context` is to make it incredibly easy to programmatically understand which show, sequence and shot a given path belongs to.
-`get-context` uses the `show_naming.toml` config file, which means that you can define you custom regexes to tell `get-context` what constitutes a sequence or a shot.
+`get-context` uses the `show_naming.toml` config file, which means that you can define your custom regexes to tell `get-context` what constitutes a sequence or a shot.
 
 The most basic usage would be something like this:
 ```bash
