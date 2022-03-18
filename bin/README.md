@@ -53,12 +53,14 @@ functions --erase name op
 
 ### Example commands
 
+These examples take for granted that you have an alias to `op`, as suggested in the previous section.
+
 ```fish
 # Go to a shot
 $ op go sc010/sc010_0010
 
-# Show info on the environment
-$ op show
+# Show info on the current OpenPipe environment
+$ op show-env
 ```
 
 ### Why fish?

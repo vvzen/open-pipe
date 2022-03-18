@@ -20,7 +20,7 @@ function _help
     echo -e "\$ op go ../some/relative/path"
     echo -e "\n"
     echo -e "Show the current environment"
-    echo -e "\$ op show"
+    echo -e "\$ op show-env"
     echo -e "\n"
     exit 1
 end
@@ -55,13 +55,20 @@ function _go
     # Finally.. go
     echo "Going to" $destination_path
     cd $destination_path
+    set --global --export OPENPIPE_LAST_GO (realpath $destination_path)
 end
 
-function _show
+function _show_env
+
+    if ! test -n "$OPENPIPE_LAST_GO"
+        echo "No OpenPipe environment detected."
+        exit 1
+    end
+
     echo -e "\nCurrent OpenPipe environment:\n"
 
     # Split by newline and build a list
-    set env_vars (string split \n -- (pwd | get-context | tr "," "\n"))
+    set env_vars (string split \n -- (echo $OPENPIPE_LAST_GO | get-context | tr "," "\n"))
 
     for env_var in $env_vars
         # Not sure why, but 'string match' seems to be printing to sdout
@@ -90,9 +97,9 @@ switch $argv[1]
         end
         _go $argv[2]
     # op show
-    case show
+    case 'show-env'
         if test (count $argv) -ge 2
-            echo "'show' currently accepts no arguments"
+            echo "'show-env' currently accepts no arguments"
             exit 1
         end
         _show
