@@ -1,6 +1,6 @@
 import os
 
-import yaml
+import tomli
 
 import openpipe.log
 
@@ -34,7 +34,7 @@ def get_config_path(name):
         for file_path in files:
             base_name = os.path.basename(file_path)
             file_name, ext = os.path.splitext(base_name)
-            if file_name == name:
+            if file_name == name and ext == ".toml":
                 matching_files.append(file_path)
 
     log.debug("Found following configs: %s, using the top-most one.",
@@ -49,8 +49,7 @@ def get_config_path(name):
 def get_config(name):
     config_path = get_config_path(name)
 
-    with open(config_path, "r") as f:
-        config_data = f.read()
+    with open(config_path, "rb") as f:
+        config_parsed_data = tomli.load(f)
 
-    config_parsed_data = yaml.safe_load(config_data)
     return config_parsed_data

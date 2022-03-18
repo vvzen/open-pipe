@@ -35,9 +35,9 @@ def test_is_sequence_with_default_config(name, result):
 
 
 @pytest.mark.parametrize("config_path", [
-    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_compound_undefined_patterns.yml")),
-    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_missing_shot_pattern.yml")),
-    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_missing_appends_with.yml")),
+    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_compound_undefined_patterns.toml")),
+    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_missing_shot_pattern.toml")),
+    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_missing_appends_with.toml")),
 ])
 def test_naming_of_malformed_configs(monkeypatch, config_path):
 
