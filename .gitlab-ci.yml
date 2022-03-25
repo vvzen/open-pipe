@@ -5,7 +5,10 @@ default:
   before_script:
     - ls -hal
     - hostname
+    - whoami
+    - echo "PATH:"
     - echo $PATH | tr ":" "\n"
+    - echo "SHELL = $SHELL"
     - which conda
 
 run-tests:
