@@ -17,6 +17,7 @@ def test_get_logger_only_returns_one_logger():
     pytest.param("DEBUG"),
     pytest.param("INFO"),
     pytest.param("WARNING"),
+    pytest.param("CRITICAL"),
     pytest.param("DEBUG %(asctime)s-%(filename)s:"),
 ])
 def test_logging_with_custom_env_vars(monkeypatch, env_var_value):
