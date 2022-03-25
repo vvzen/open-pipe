@@ -16,12 +16,13 @@ SAMPLE_CONFIGS_DIR = os.path.join(SAMPLES_DIR, "configs")
     pytest.param("n"),
     pytest.param("no"),
 ])
-@pytest.mark.parametrize("show_name", [
-    pytest.param("the_witcher_season_3"),
-    pytest.param("the latest beautiful commercial"),
-    pytest.param("koyaanisqatsi"),
+@pytest.mark.parametrize("show_name, top_dir_already_exists", [
+    pytest.param("the_witcher_season_3", True),
+    pytest.param("the latest beautiful commercial", False),
+    pytest.param("koyaanisqatsi", False),
 ])
-def test_show_creation(monkeypatch, user_reply, show_name):
+def test_show_creation(monkeypatch,
+                       user_reply, show_name, top_dir_already_exists):
 
     # Pretend to be replying to the input() calls
     def mocked_input(*args, **kwargs):
@@ -32,6 +33,21 @@ def test_show_creation(monkeypatch, user_reply, show_name):
 
     monkeypatch.setattr("builtins.input", mocked_input)
     monkeypatch.setattr("openpipe.config.get_config_path", mocked_get_config_path)
+
+    if not os.path.exists(SHOWS_TMP_ROOT_PATH):
+        os.makedirs(SHOWS_TMP_ROOT_PATH)
+
+    if top_dir_already_exists:
+        os.makedirs(os.path.join(SHOWS_TMP_ROOT_PATH, show_name))
+
+    openpipe.show.create_show(show_name)
+
+    # Clean up
+    shutil.rmtree(SHOWS_TMP_ROOT_PATH)
+
+
+def test_show_creation_top_directory_exists():
+    show_name = "test"
 
     if not os.path.exists(SHOWS_TMP_ROOT_PATH):
         os.makedirs(SHOWS_TMP_ROOT_PATH)
