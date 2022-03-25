@@ -21,5 +21,7 @@ pytest = "7.0.1"
 
 [tool.pytest.ini_options]
 markers = [
-    "smoke_test: test that only checks for breaking changes, not changes in behaviour"
+    "to_test: for debugging",
+    "smoke_test: test that only checks if code runs",
+    "behaviour_test: test that checks for behaviour consistency (return values, exceptions, etc.)"
 ]
