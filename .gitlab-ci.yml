@@ -1,0 +1,11 @@
+stages:
+  - test
+
+run-tests:
+  tags:
+    - pipeline
+  stage: test
+  script:
+    - ./run_tests.sh
+  only:
+    - merge_requests
