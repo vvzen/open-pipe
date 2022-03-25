@@ -12,7 +12,7 @@ echo "OPENPIPE_CONFIG_PATH: $OPENPIPE_CONFIG_PATH"
 echo -e "\n"
 echo "Running Open Pipe Unit Test suite"
 if [ ! -z $DEBUG ]; then
-    pytest openpipe/test --cov=openpipe --cov-report term-missing -vvv
+    pytest tests --cov=openpipe --cov-report term-missing -vvv
 else
-    pytest openpipe/test --cov=openpipe --cov-report=xml
+    pytest tests --cov=openpipe --cov-report=xml
 fi
