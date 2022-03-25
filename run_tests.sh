@@ -14,11 +14,11 @@ echo "Running Open Pipe Unit Test suite"
 
 # Are we running on Github?
 if [ -n $GITHUB_ACTION ]; then
-    pytest tests --cov=openpipe --cov-report=xml
+    poetry run pytest tests --cov=openpipe --cov-report=xml
 # Or on Gitlab?
 elif [ -n $CI ]; then
-    pytest tests --cov=openpipe --cov-report=xml
+    poetry run  pytest tests --cov=openpipe --cov-report=xml
 # Or locally?
 else
-    poetry run pytest tests --cov=openpipe --cov-report term-missing
+    pytest tests --cov=openpipe --cov-report term-missing
 fi
