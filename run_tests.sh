@@ -13,10 +13,10 @@ echo -e "\n"
 echo "Running Open Pipe Unit Test suite"
 
 # Are we running on Github?
-if [ -z $GITHUB_ACTION ]; then
-    pytest tests --cov=openpipe --cov-report term-missing
+if [ -n $GITHUB_ACTION ]; then
+    poetry run pytest tests --cov=openpipe --cov-report term-missing
 # Or on Gitlab?
-elif [ -z $CI ]; then
+elif [ -n $CI ]; then
     poetry run pytest tests --cov=openpipe --cov-report term-missing
 # Or locally?
 else
