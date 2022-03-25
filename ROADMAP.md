@@ -1,14 +1,9 @@
-# TODO
+# ROADMAP
 
 A list of development goals and tasks which I want to address in the future.
-Items marked with (DONE) have been completed.
+Items under the DONE section have been completed.
 
-## General
-### Implement a 'deactivate' type of script for source_me.fish & source_me.bash
-
-This should remove any changes that the sourcing of these files brought to the environment.
-The is similar to how a `conda deactivate` works, or a `module unload` (for tcl modules)
-
+# Done
 
 ### Understand if yaml is a good choice for configs (DONE)
 
@@ -23,7 +18,6 @@ I want to reduce the burden and chaos introduced by vendoring third-party librar
 
 Currently, I'm leaning more towards adopting TOML in python.
 The TL;DR is that TOML will be part of the standard library in python3.11 (which means it's future-proof) and also, in case I ever need it, it ships in RUST without any other dependencies, since cargo uses it.
-
 
 **Long read**:
 
@@ -49,8 +43,7 @@ with open(config_path, "r") as f:
     data_from_yaml = yaml.safe_load(f.read())
 ```
 
-## Binaries
-### op
+> Result: TOML is a more future-proof, and less prone to misconfiguration by human-error. Implemented support in c7f5aca
 
 #### Implement 'op show' (DONE)
 
@@ -60,3 +53,28 @@ with open(config_path, "r") as f:
 This was implemented `Fri Mar 18 17:40:15 GMT 2022` under `op show-env`.
 
 It will show the environment where you `go`ed to last.
+
+> Result: implemented in 2742c1b
+
+
+# TODO
+
+## General
+### Implement a 'deactivate' type of script for source_me.fish & source_me.bash
+
+This should remove any changes that the sourcing of these files brought to the environment.
+The is similar to how a `conda deactivate` works, or a `module unload` (for tcl modules)
+
+## Implement project creation
+
+Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
+
+
+## Binaries
+### op
+
+#### Implement support for setting OCIO env var
+
+Just like we automatically set the `OPENPIPE_CONFIG_PATH` when users do a `op go some_dir`, we should allow `op go` to set other useful env var, like the `OCIO` one for targeting custom OCIO configs.
+
+To make the mechanism generic, the logic for setting this path should be customizable (via hooks), with a default implementation provided by default.
