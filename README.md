@@ -46,6 +46,8 @@ Prefer a style inspired by functional programming (receive input, produce output
 
 1. "We're all condescending adults". Simplify when needed, but don't oversimplify and take decisions instead of your users - always leave them flexibility to act the way they want. Once again, receive and return from your programs using shared schemas instead.
 
+2. When in doubt, always prefer flexibility. OpenPipe tries to offer sane defaults, but can be customized. Most of the functionality can be tweaked by either editing config files (the `.toml` ones under `configs`), environment variables or via code hooks.
+
 
 ## Environment variables
 
