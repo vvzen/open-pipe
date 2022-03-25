@@ -37,9 +37,6 @@ def user_requested_custom_formatting():
         return
 
     tokens = env_var.split(" ")
-    if not tokens:
-        return
-
     num_tokens = len(tokens)
 
     if tokens[num_tokens-1] in LOGGING_LEVELS_AS_STRINGS:
