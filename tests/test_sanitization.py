@@ -5,6 +5,7 @@ from openpipe.sanitization.core import name_for_filesystem
 
 
 @pytest.mark.parametrize("input_name, output_name", [
+    pytest.param("the_crown_season_6", "the_crown_season_6"),
     pytest.param("Name with Spaces", "name_with_spaces"),
     pytest.param(u"Something fishy 🐠", "something_fishy_"),
     pytest.param("A_NAME_LIKE_THIS", "a_name_like_this"),
