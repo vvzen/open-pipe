@@ -60,13 +60,14 @@ DEFAULT_STEPS = [
 
 def get_show_root():
     openpipe_config = openpipe.config.get_config("openpipe")
-    show_config = openpipe_config.get("show")
-    if not show_config:
+    if "show" not in openpipe_config:
         raise openpipe.config.MalformedConfigError(
                 "Missing 'show' key in 'openpipe.toml' config.")
 
+    show_config = openpipe_config.get("show")
     root_mount_path = show_config.get("root_mount_path")
-    if not root_mount_path:
+
+    if "root_mount_path" not in show_config or not root_mount_path:
         raise openpipe.config.MalformedConfigError(
                 "Missing 'show.root_mount_path' key in 'openpipe.toml' config.")
 
