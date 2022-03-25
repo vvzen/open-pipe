@@ -6,11 +6,16 @@ run-tests:
     - pipeline
   stage: test
   script:
-    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-    - source $HOME/.poetry/env
+    # Be sure we have a python3.7, install it with conda
+    - conda create -n m74-tests python==3.7 --yes
+    - conda activate m74-tests
+    # Install poetry
+    - pip install poetry
     - poetry --version
     - poetry env info
+    # Install the dependencies of the tests
     - poetry install -vv
+    # Finally, run the tests!
     - ./run_tests.sh
   only:
     - merge_requests
