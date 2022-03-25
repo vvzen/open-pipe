@@ -10,7 +10,6 @@ root
             delivery 775
     openpipe 775
         etc 775
-    pipeline 775
         bin 775
         color 775
             installed 775
