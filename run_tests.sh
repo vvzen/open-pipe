@@ -14,5 +14,5 @@ echo "Running Open Pipe Unit Test suite"
 if [ -z $GITHUB_ACTION ]; then
     pytest tests --cov=openpipe --cov-report term-missing
 else
-    pytest tests --cov=openpipe --cov-report=xml
+    poetry run pytest tests --cov=openpipe --cov-report=xml
 fi
