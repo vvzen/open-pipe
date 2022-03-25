@@ -23,6 +23,6 @@ def name_for_filesystem(input_name):
 
     letters = [
         a for a in input_name
-        if a in string.ascii_letters or a == "_"
+        if a in string.ascii_letters or a in string.digits or a == "_"
     ]
     return "".join(letters).lower()

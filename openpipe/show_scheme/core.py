@@ -134,16 +134,6 @@ def create_project(project_name, root_path):
     :type project_name: str
     """
 
-    safe_project_name = name_for_filesystem(project_name)
-
-    if safe_project_name != project_name:
-        log.info("Project name was automatically converted from %s to %s",
-                 project_name, safe_project_name)
-        reply = input("Is that ok? y/n:  ")
-        if reply.lower() not in ["y", "yes"]:
-            log.info("User did not agree with project name change. Exiting..")
-            sys.exit(1)
-
     # Gather schema
     schema_path = get_path_to_current_show_scheme()
     log.info("Reading schema from %s", schema_path)
@@ -155,7 +145,7 @@ def create_project(project_name, root_path):
         raise OSError("Root path doesn't exist on disk: %s" % root_path)
 
     # Create with open permissions..
-    project_root_path = os.path.join(root_path, safe_project_name)
+    project_root_path = os.path.join(root_path, project_name)
     os.mkdir(project_root_path, mode=0o777)
 
     for dir_info in dirs_to_create:
