@@ -1,4 +1,5 @@
 stages:
+  - prepare
   - test
 
 default:
@@ -9,12 +10,14 @@ default:
     - echo "PATH:"
     - echo $PATH | tr ":" "\n"
     - echo "SHELL = $SHELL"
+    # Source conda
+    - source /home/gitlab-runner/miniconda3/etc/profile.d/conda.sh
     - which conda
 
-run-tests:
+install-dependencies:
   tags:
     - pipeline
-  stage: test
+  stage: prepare
   script:
     # Be sure we have a python3.7, install it with conda
     - conda create -n m74-tests python==3.7 --yes
@@ -25,7 +28,13 @@ run-tests:
     - poetry env info
     # Install the dependencies of the tests
     - poetry install -vv
-    # Finally, run the tests!
+
+run-tests:
+  tags:
+    - pipeline
+  stage: test
+  script:
+    - conda activate m74-tests
     - ./run_tests.sh
   only:
     - merge_requests
