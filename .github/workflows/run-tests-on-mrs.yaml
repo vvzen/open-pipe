@@ -20,9 +20,11 @@ jobs:
           poetry --version
           poetry env info
       - name: Install dependencies
-        run: poetry install -vv
+        run: source $HOME/.poetry/env |
+             poetry install -vv
       - name: Run Tests
-        run: ./run_tests.sh
+        run: source $HOME/.poetry/env |
+             ./run_tests.sh
       - name: Update coverage
         uses: codecov/codecov-action@v2
         with:
