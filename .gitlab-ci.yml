@@ -28,6 +28,8 @@ install-dependencies:
     - poetry env info
     # Install the dependencies of the tests
     - poetry install -vv
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 run-tests:
   tags:
@@ -36,5 +38,5 @@ run-tests:
   script:
     - conda activate m74-tests
     - ./run_tests.sh
-  only:
-    - merge_requests
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
