@@ -1,6 +1,13 @@
 stages:
   - test
 
+default:
+  before_script:
+    - ls -hal
+    - hostname
+    - echo $PATH | tr ":" "\n"
+    - which conda
+
 run-tests:
   tags:
     - pipeline
