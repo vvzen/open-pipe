@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "open-pipe"
+version = "0.1.0-alpha"
+description = "Modular cli tools and libraries for dealing with vfx/cg pipelines"
+license = "MIT"
+authors = [
+    "Valerio Viperino <10340139+vvzen@users.noreply.github.com>"
+]
+
+[tool.poetry.dependencies]
+python = "~3.7"
+tomli = "~2.0"
+six = "~1.16"
+
+[tool.poetry.dev-dependencies]
+coverage = "6.3.2"
+pyfakefs = "4.5.5"
+pytest-cov = "3.0.0"
+pytest = "7.0.1"
+
+
+[tool.pytest.ini_options]
+markers = [
+    "smoke_test: test that only checks for breaking changes, not changes in behaviour"
+]
