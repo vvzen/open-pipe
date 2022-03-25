@@ -69,6 +69,12 @@ The is similar to how a `conda deactivate` works, or a `module unload` (for tcl 
 
 Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
 
+## Implement validation of configs via JSONschema
+
+Right now there's no programmatic validation of the config files.
+
+If a required entry is missing, it's up to the implementation of the single function relying on that config file to properly handle this exception.
+Instead, the `get_config(name)` call should automatically validate all of the entries based on the JSONschema of that config.
 
 ## Binaries
 ### op
