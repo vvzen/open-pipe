@@ -70,7 +70,8 @@ The is similar to how a `conda deactivate` works, or a `module unload` (for tcl 
 Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
 
 > First implementation of the libs in d563632
-> Only needs to expose the functionality in a CLI
+
+> Only need to expose the functionality in a CLI
 
 ## Implement validation of configs via JSONschema
 
