@@ -87,4 +87,4 @@ Instead, the `get_config(name)` call should automatically validate all of the en
 
 Just like we automatically set the `OPENPIPE_CONFIG_PATH` when users do a `op go some_dir`, we should allow `op go` to set other useful env var, like the `OCIO` one for targeting custom OCIO configs.
 
-To make the mechanism generic, the logic for setting this path should be customizable (via hooks), with a default implementation provided by default.
+To make the mechanism generic, the logic for setting this path should be customizable (via hooks), with a default implementation provided.
