@@ -5,7 +5,7 @@ Items under the DONE section have been completed.
 
 # Done
 
-### Understand if yaml is a good choice for configs (DONE)
+### Understand if yaml is a good choice for configs
 
 In Framestore we use yaml since it provides better readability compared to JSON.
 However, support for parsing `yaml` doesn't ship with the standard library of python, which means that to use `op` one would first need to install `pyyaml` for their current python, which is not optimal.
@@ -45,7 +45,7 @@ with open(config_path, "r") as f:
 
 > Result: TOML is a more future-proof, and less prone to misconfiguration by human-error. Implemented support in c7f5aca
 
-#### Implement 'op show' (DONE)
+### Implement 'op show'
 
 <del>It should show the environment of the current directory</del>.
 <del>Probably equivalent to something like `pwd | get-context`.</del>
@@ -68,6 +68,9 @@ The is similar to how a `conda deactivate` works, or a `module unload` (for tcl 
 ## Implement project creation
 
 Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
+
+> First implementation of the libs in d563632
+> Only needs to expose the functionality in a CLI
 
 ## Implement validation of configs via JSONschema
 
