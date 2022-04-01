@@ -20,7 +20,7 @@ function _help
     echo -e "\$ op go ../some/relative/path"
     echo -e "\n"
     echo -e "Show the current environment"
-    echo -e "\$ op show-env"
+    echo -e "\$ op display-env"
     echo -e "\n"
     exit 1
 end
@@ -58,7 +58,7 @@ function _go
     set --global --export OPENPIPE_LAST_GO (realpath $destination_path)
 end
 
-function _show_env
+function _display_env
 
     if ! test -n "$OPENPIPE_LAST_GO"
         echo "No OpenPipe environment detected."
@@ -97,10 +97,10 @@ switch $argv[1]
         end
         _go $argv[2]
     # op show
-    case 'show-env'
+    case 'display-env'
         if test (count $argv) -ge 2
-            echo "'show-env' currently accepts no arguments"
+            echo "'display-env' currently accepts no arguments"
             exit 1
         end
-        _show
+        _display_env
 end
