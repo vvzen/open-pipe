@@ -5,6 +5,7 @@ import os
 import enum
 import shutil
 import traceback
+import subprocess
 
 import openpipe.log
 import openpipe.config
@@ -17,6 +18,21 @@ CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 SHOW_SCHEME_DIR = os.path.join(CURRENT_DIR, "schema", "v001")
 
 # -----------------------------------------------------------------------------
+class ShowCreationSteps(object):
+    setup_on_disk = "setup_on_disk"
+    setup_ocio = "setup_ocio"
+
+ALL_STEPS = [
+    ShowCreationSteps.setup_on_disk,
+    ShowCreationSteps.setup_ocio
+]
+
+DEFAULT_STEPS = [
+    ShowCreationSteps.setup_on_disk,
+    ShowCreationSteps.setup_ocio
+]
+
+# -----------------------------------------------------------------------------
 def create_show_on_disk(show_name, root_path):
     log.info("\tCreating show on disk..")
 
@@ -27,6 +43,8 @@ def create_show_on_disk(show_name, root_path):
         return
 
     openpipe.show_scheme.core.create_project(show_name, root_path)
+    log.info("Result on disk (first 4 levels) :")
+    subprocess.check_call(["tree", "-dupg", "-L", "4", show_path])
 
 
 def setup_ocio_for_show(show_name, root_path):
@@ -46,16 +64,11 @@ def setup_ocio_for_show(show_name, root_path):
     shutil.copyfile(source_config, destination_path)
     log.info("\tOCIO config copied to %s", destination_path)
 
-
-class ShowCreationSteps(enum.Enum):
-    on_disk = create_show_on_disk
-    setup_ocio = setup_ocio_for_show
-
-
-DEFAULT_STEPS = [
-    ShowCreationSteps.on_disk,
-    ShowCreationSteps.setup_ocio
-]
+STEP_FUNCTION_MAP = {
+    ShowCreationSteps.setup_on_disk: create_show_on_disk,
+    ShowCreationSteps.setup_ocio: setup_ocio_for_show
+}
+# -----------------------------------------------------------------------------
 
 
 def get_show_root():
@@ -77,7 +90,12 @@ def get_show_root():
 def create_show(name, steps=DEFAULT_STEPS):
 
     log.info("Show creation has started.")
-    log.info("The request is to create a show with name '%s'", name)
+    log.info("Show name is '%s'", name)
+
+    wrong_steps = [s for s in steps if s not in ALL_STEPS]
+    if wrong_steps:
+        log.error("These are not accepted steps: '%s'. Exiting..", wrong_steps)
+        raise RuntimeError("Invalid steps provided. See log above^")
 
     safe_project_name = name_for_filesystem(name)
 
@@ -90,15 +108,18 @@ def create_show(name, steps=DEFAULT_STEPS):
             return
 
     show_root = get_show_root()
-    log.info("show_root: %s", show_root)
+    log.info("Show root: %s", show_root)
+
+    # To allow for testing under $HOME directories
+    show_root = os.path.expanduser(os.path.expandvars(show_root))
 
     # Run the show creation steps
-    for step in steps:
-        step_name = step.__name__
+    for step_name in steps:
+        step_func = STEP_FUNCTION_MAP[step_name]
         log.info("Executing step: %s", step_name)
 
         try:
-            step(safe_project_name, show_root)
+            step_func(safe_project_name, show_root)
         except Exception:
             log.error("Failed to run step '%s'", step_name)
             log.error("Follows original exception:")
