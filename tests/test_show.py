@@ -82,3 +82,13 @@ def test_show_creation_wrong_openpipe_configs(monkeypatch, config_path):
 
     # Clean up
     shutil.rmtree(SHOWS_TMP_ROOT_PATH)
+
+
+@pytest.mark.behaviour_test
+@pytest.mark.parametrize("name, steps", [
+    pytest.param("some-name", ["some-weird-step"]),
+    pytest.param("some-name", ["some-weird-step", "and another one"]),
+])
+def test_show_creation_wrong_steps(name, steps):
+    with pytest.raises(RuntimeError):
+        openpipe.show.create_show(name, steps)
