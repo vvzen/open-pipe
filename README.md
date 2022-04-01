@@ -45,3 +45,24 @@ Prefer a style inspired by functional programming (receive input, produce output
 ### Treat the consumer of your API with respect
 
 1. "We're all condescending adults". Simplify when needed, but don't oversimplify and take decisions instead of your users - always leave them flexibility to act the way they want. Once again, receive and return from your programs using shared schemas instead.
+
+2. When in doubt, always prefer flexibility. OpenPipe tries to offer sane defaults, but can be customized. Most of the functionality can be tweaked by either editing config files (the `.toml` ones under `configs`), environment variables or via code hooks.
+
+
+## Environment variables
+
+All of the environment variables used by OpenPipe are prefixed with `OPENPIPE`, so that one can easily inspect them by doing something like:
+
+```bash
+$ env | grep OPENPIPE
+```
+
+### OPENPIPE_LOG
+
+By default, it's not set.
+Set it to "DEBUG" to enable additional debugging.
+Set it to something like `DEBUG %(asctime)s-%(filename)s:` to specify a custom string for the logging formatter used by OpenPipe.
+
+### OPENPIPE_CONFIG_PATH
+
+Search path of the configuration files (.toml) used by OpenPipe.

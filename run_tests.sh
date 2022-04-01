@@ -11,8 +11,14 @@ echo "PYTHONPATH: $PYTHONPATH"
 echo "OPENPIPE_CONFIG_PATH: $OPENPIPE_CONFIG_PATH"
 echo -e "\n"
 echo "Running Open Pipe Unit Test suite"
-if [ ! -z $DEBUG ]; then
-    pytest openpipe/test --cov=openpipe --cov-report term-missing -vvv
+
+# Are we running on Github?
+if [ -n $GITHUB_ACTION ]; then
+    poetry run pytest tests --cov=openpipe --cov-report=xml
+# Or on Gitlab?
+elif [ -n $CI ]; then
+    poetry run  pytest tests --cov=openpipe --cov-report=xml
+# Or locally?
 else
-    pytest openpipe/test --cov=openpipe --cov-report=xml
+    pytest tests --cov=openpipe --cov-report term-missing
 fi
