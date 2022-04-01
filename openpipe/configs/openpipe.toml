@@ -1,3 +1,3 @@
 [show]
 #root_mount_path = "/net/shows"
-root_mount_path = "/Users/vvzen/Documents/code/personal/open-pipe/sandbox/shows"
+root_mount_path = "~/Documents/code/personal/open-pipe/sandbox/shows"
