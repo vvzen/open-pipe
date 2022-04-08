@@ -56,6 +56,13 @@ It will show the environment where you `go`ed to last.
 
 > Result: implemented in 2742c1b
 
+## Implement project creation
+
+Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
+
+> First implementation of the libs in d563632
+
+> Expose the functionality in a CLI. Done in b5de2ff
 
 # TODO
 
@@ -64,14 +71,6 @@ It will show the environment where you `go`ed to last.
 
 This should remove any changes that the sourcing of these files brought to the environment.
 The is similar to how a `conda deactivate` works, or a `module unload` (for tcl modules)
-
-## Implement project creation
-
-Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
-
-> First implementation of the libs in d563632
-
-> Only need to expose the functionality in a CLI
 
 ## Implement validation of configs via JSONschema
 
