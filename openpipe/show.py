@@ -21,10 +21,12 @@ SHOW_SCHEME_DIR = os.path.join(CURRENT_DIR, "schema", "v001")
 class ShowCreationSteps(object):
     setup_on_disk = "setup_on_disk"
     setup_ocio = "setup_ocio"
+    setup_on_ftrack = "setup_on_ftrack"
 
 ALL_STEPS = [
     ShowCreationSteps.setup_on_disk,
-    ShowCreationSteps.setup_ocio
+    ShowCreationSteps.setup_ocio,
+    ShowCreationSteps.setup_on_ftrack,
 ]
 
 DEFAULT_STEPS = [
@@ -64,9 +66,16 @@ def setup_ocio_for_show(show_name, root_path):
     shutil.copyfile(source_config, destination_path)
     log.info("\tOCIO config copied to %s", destination_path)
 
+
+def create_project_on_ftrack(show_name, root_path):
+    import openpipe.hooks.ftrack
+    return openpipe.hooks.ftrack.create_project(show_name, root_path)
+
+
 STEP_FUNCTION_MAP = {
     ShowCreationSteps.setup_on_disk: create_show_on_disk,
-    ShowCreationSteps.setup_ocio: setup_ocio_for_show
+    ShowCreationSteps.setup_ocio: setup_ocio_for_show,
+    ShowCreationSteps.setup_on_ftrack: create_project_on_ftrack,
 }
 # -----------------------------------------------------------------------------
 
