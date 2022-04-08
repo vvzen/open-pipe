@@ -68,8 +68,12 @@ def setup_ocio_for_show(show_name, root_path):
 
 
 def create_project_on_ftrack(show_name, root_path):
-    import openpipe.hooks.ftrack
-    return openpipe.hooks.ftrack.create_project(show_name, root_path)
+    try:
+        import openpipe.hooks.ftrack
+        return openpipe.hooks.ftrack.create_project(show_name, root_path)
+    except ImportError:
+        log.warning("No hook defined for 'hooks.ftrack.create_project")
+        log.warning("Skipping.")
 
 
 STEP_FUNCTION_MAP = {
