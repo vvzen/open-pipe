@@ -47,15 +47,25 @@ function _go
     if string match 'etc/config' $destination_path
         set --global --export --prepend --path OPENPIPE_CONFIG_PATH $destination_path
     end
-    # Path
+    # PATH
     if string match 'bin' $destination_path
         set --global --export --prepend --path PATH $destination_path
+    end
+    # Custom env vars
+    set custom_env_vars (command python -c 'import openpipe.hooks.env_vars as ev; ev.main()')
+    for env_var in $custom_env_vars
+        # TODO: protect against the use of '=' in environment vars values
+        set env_var_split (string split = $env_var)
+        set key $env_var_split[1]
+        set value $env_var_split[2]
+        echo "Setting $key to $value"
+        set --global --export $key $value
     end
 
     # Finally.. go
     echo "Going to" $destination_path
     cd $destination_path
-    set --global --export OPENPIPE_LAST_GO (realpath $destination_path)
+    set --global --export OPENPIPE_LAST_GO (realpath .)
 end
 
 function _display_env
