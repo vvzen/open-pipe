@@ -17,7 +17,7 @@ OpenPipe is a personal project born from a simple question:
 It's an experiment (but a concrete, usable one) to understand what didn't work and why.
 It has already offered me plenty of insights, and made me realize how hard it is to write good flexible code.
 
-Together with the python library, it offers `op` , a small cli that resembles `go` (not the programming language, but the `goat` utility) and can be used to navigate the filesystem and set the appropriate pipeline context.
+Together with the `openpipe` python library, it offers `op` , a small cli that resembles `go` (not the programming language, but the `goat` utility) and can be used to navigate the filesystem and set the appropriate pipeline context.
 
 `op` is built on top of `fish`, the shell for people that love elegance (and shells!).
 For more info on how to install `fish`, please see: https://fishshell.com
