@@ -71,7 +71,7 @@ Create a CLI that is capable of generating the directory structure on disk, base
 
 > Expose the functionality in a CLI. Done in b5de2ff
 
-#### Implement support for setting OCIO env var
+## Implement support for setting OCIO env var
 
 Just like we automatically set the `OPENPIPE_CONFIG_PATH` when users do a `op go some_dir`, we should allow `op go` to set other useful env var, like the `OCIO` one for targeting custom OCIO configs.
 
