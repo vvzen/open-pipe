@@ -2,7 +2,6 @@
 """
 
 import os
-import enum
 import shutil
 import traceback
 import subprocess
@@ -12,7 +11,7 @@ import openpipe.config
 import openpipe.show_scheme.core
 from openpipe.sanitization.core import name_for_filesystem
 
-log = openpipe.log.get_logger("show")
+log = openpipe.log.get_logger('openpipe.show')
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 SHOW_SCHEME_DIR = os.path.join(CURRENT_DIR, "schema", "v001")
@@ -69,8 +68,8 @@ def setup_ocio_for_show(show_name, root_path):
 
 def create_project_on_ftrack(show_name, root_path):
     try:
-        import openpipe.hooks.ftrack
-        return openpipe.hooks.ftrack.create_project(show_name, root_path)
+        import openpipe_hooks.ftrack
+        return openpipe_hooks.ftrack.create_project(show_name, root_path)
     except ImportError:
         log.warning("No hook defined for 'hooks.ftrack.create_project")
         log.warning("Skipping.")
@@ -96,6 +95,9 @@ def get_show_root():
     if "root_mount_path" not in show_config or not root_mount_path:
         raise openpipe.config.MalformedConfigError(
                 "Missing 'show.root_mount_path' key in 'openpipe.toml' config.")
+
+    # To allow for testing under $HOME directories
+    root_mount_path = os.path.expanduser(os.path.expandvars(root_mount_path))
 
     return root_mount_path
 
@@ -140,3 +142,7 @@ def create_show(name, steps=DEFAULT_STEPS):
             return
 
     log.info("Show creation completed.")
+
+
+def get_current_show_name():
+    return os.environ["OPENPIPE_SHOW"]
