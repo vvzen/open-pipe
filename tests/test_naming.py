@@ -3,7 +3,10 @@ import os
 import pytest
 
 import openpipe.config
-from openpipe.naming import is_shot, is_sequence, get_naming_regexes
+from openpipe.naming import (
+    is_shot, is_sequence,
+    sequence_name_from_shot_name, get_naming_regexes
+)
 
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -52,3 +55,23 @@ def test_naming_of_malformed_configs(monkeypatch, config_path):
 
 def test_get_naming_regexes_missing_entry():
     assert get_naming_regexes("a_name_that_is_not_a_valid_key") is None
+
+
+@pytest.mark.parametrize("shot_name, expected_sequence_name", [
+    pytest.param("sc010_0010", "sc010"),
+    pytest.param("sc020_0010", "sc020"),
+    pytest.param("sc030_0040", "sc030"),
+    pytest.param("sc020_0040", "sc020"),
+    pytest.param("previz010_0010", "previz010"),
+])
+def test_sequence_name_from_shot_name(shot_name, expected_sequence_name):
+    assert sequence_name_from_shot_name(shot_name) == expected_sequence_name
+
+@pytest.mark.parametrize("shot_name", [
+    pytest.param("not a shot name"),
+    pytest.param("somethingsc020_0010"),
+    pytest.param("sc030_0040asdasdasd"),
+])
+def test_sequence_name_from_invalid_shot_name(shot_name):
+    with pytest.raises(ValueError):
+        sequence_name_from_shot_name(shot_name)
