@@ -1,3 +1,7 @@
+# Please edit this file
+
 [show]
+# Root path where your projects will be stored.
+root_mount_path = "~/works"
+# Could be a network mount too, or whatever.
 #root_mount_path = "/net/shows"
-root_mount_path = "~/Documents/code/personal/open-pipe/sandbox/shows"
