@@ -2,6 +2,7 @@
 
 A list of development goals and tasks which I want to address in the future.
 Items under the DONE section have been completed.
+This file also works as a developer diary.
 
 # Done
 
@@ -14,10 +15,14 @@ I want to reduce the burden and chaos introduced by vendoring third-party librar
 
 - Use a config format that is supported by python's standard library
 
+- Use a config format that _will_ be supported by python's standard library
+
 - Don't use python for parsing the configs that `op` relies on, and instead compile and ship a binary (say, in Rust). So `get-context` would need to be rewritten in Rust.
 
+**Short read**
 Currently, I'm leaning more towards adopting TOML in python.
-The TL;DR is that TOML will be part of the standard library in python3.11 (which means it's future-proof) and also, in case I ever need it, it ships in RUST without any other dependencies, since cargo uses it.
+While it's not part of python yet, it will be part of the standard library in python3.11 (which means it's future-proof) and also, in case I ever need it, it ships in RUST without any other dependencies, since cargo uses it.
+TOML is definitely simpler to parse than yaml, and is in line with the minimalistic approach of `OpenPipe`.
 
 **Long read**:
 
@@ -56,6 +61,8 @@ It will show the environment where you `go`ed to last.
 
 > Result: implemented in 2742c1b
 
+> In b34b3b0, renamed to `op display-env` to avoid ambiguities between a 'show' as in 'project/job' and 'show' as in 'to showcase/display'.
+
 ## Implement project creation
 
 Create a CLI that is capable of generating the directory structure on disk, based on the `show_scheme`.
@@ -63,6 +70,15 @@ Create a CLI that is capable of generating the directory structure on disk, base
 > First implementation of the libs in d563632
 
 > Expose the functionality in a CLI. Done in b5de2ff
+
+#### Implement support for setting OCIO env var
+
+Just like we automatically set the `OPENPIPE_CONFIG_PATH` when users do a `op go some_dir`, we should allow `op go` to set other useful env var, like the `OCIO` one for targeting custom OCIO configs.
+
+To make the mechanism generic, the logic for setting this path should be customizable (via hooks), with a default implementation provided.
+
+> Implemented in d2d6912 by letting the user define a `env_vars.py` file that prints to stdout the vars they want to set on each go.
+
 
 # TODO
 
@@ -78,12 +94,3 @@ Right now there's no programmatic validation of the config files.
 
 If a required entry is missing, it's up to the implementation of the single function relying on that config file to properly handle this exception.
 Instead, the `get_config(name)` call should automatically validate all of the entries based on the JSONschema of that config.
-
-## Binaries
-### op
-
-#### Implement support for setting OCIO env var
-
-Just like we automatically set the `OPENPIPE_CONFIG_PATH` when users do a `op go some_dir`, we should allow `op go` to set other useful env var, like the `OCIO` one for targeting custom OCIO configs.
-
-To make the mechanism generic, the logic for setting this path should be customizable (via hooks), with a default implementation provided.
