@@ -28,7 +28,7 @@ Fore more info on the other CLI offered, see https://github.com/vvzen/open-pipe/
 
 ## Getting started
 
-NB: Install and use the `fish` shell if you want to use the CLIs.
+NB: Install and use the `fish` shell if you want to use the CLIs (https://fishshell.com)
 
 If using fish: `source openpipe/source_me.fish`.
 If using bash: `source openpipe/source_me.fish`.
