@@ -20,6 +20,7 @@ It has already offered me plenty of insights, and made me realize how hard it is
 Together with the `openpipe` python library, it offers `op` , a small cli that resembles `go` (not the programming language, but the `goat` utility) and can be used to navigate the filesystem and set the appropriate pipeline context.
 
 `op` is built on top of `fish`, the shell for people that love elegance (and shells!).
+The `fi` stands for `Friendly Interactive`: what more do you want?
 For more info on how to install `fish`, please see: https://fishshell.com
 
 The reason for choosing fish is that it's a joy to write scripts in fish, plus its autocompletion and ease of use makes it incredibly user friendly. Since `fish` is not POSIX compliant, my goal is mostly to use it for user facing tools.
@@ -38,9 +39,11 @@ Now you'll have `openpipe` in your `PYTHONPATH`, and the other CLIs in your `PAT
 
 Add `alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish'` to your fish config.
 
-One liner:
+For example (in fish):
 ```bash
-echo "alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish'" >> ~/.config/fish/config.fish
+$ set DOWNLOAD_DIR /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish
+$ echo "# OpenPipe" >> ~/.config/fish/config.fish
+$ echo "alias op='source $DOWNLOAD_DIR" >> ~/.config/fish/config.fish
 ```
 
 Customize the `./configs/*.toml` files to your needs, and put them in a directory under the `OPENPIPE_CONFIG_PATH`.
