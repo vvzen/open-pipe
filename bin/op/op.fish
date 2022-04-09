@@ -39,8 +39,20 @@ function _go
         return
     end
 
+    # TODO: make into a single function since we use
+    # this approach in different parts
+
     # Parse destination directory to understand environment
-    echo $destination_path | get-context > /dev/null
+    set op_env_vars (string split \n -- (echo (realpath $destination_path) | get-context | tr "," "\n"))
+    for openpipe_env_var in $op_env_vars
+        set op_env_var_split (string split = $openpipe_env_var)
+        set key $op_env_var_split[1]
+        set value $op_env_var_split[2]
+        if string match -v '*unknown*' $value > /dev/null
+            echo "Setting $key to $value"
+            set --global --export $key $value
+        end
+    end
 
     # Set environment variables
     # Config
@@ -52,7 +64,7 @@ function _go
         set --global --export --prepend --path PATH $destination_path
     end
     # Custom env vars
-    set custom_env_vars (command python -c 'import openpipe.hooks.env_vars as ev; ev.main()')
+    set custom_env_vars (command python -c 'import openpipe_hooks.env_vars as ev; ev.main()')
     for env_var in $custom_env_vars
         # TODO: protect against the use of '=' in environment vars values
         set env_var_split (string split = $env_var)
