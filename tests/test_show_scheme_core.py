@@ -24,6 +24,10 @@ def test_detect_indent(input_line,indent_num):
     assert detect_indent(input_line) == indent_num
 
 
+def test_read_directories_from_schema_missing_schema():
+    with pytest.raises(OSError):
+        read_directories_from_schema("/a/missing/path")
+
 # Smoke tests
 # -----------------------------------------------------------------------------
 # Only check that things are still working in order to prevent
