@@ -70,3 +70,19 @@ def is_sequence(input_name):
         if sequence_regex.match(input_name):
             return True
     return False
+
+
+def sequence_name_from_shot_name(shot_name):
+
+    if not is_shot(shot_name):
+        raise ValueError("'%s' is not a valid shot name")
+
+    sequence_regexes = get_naming_regexes("sequence")
+    for regex in sequence_regexes:
+        # Remove anchors of the regex
+        unconstrained_regex = re.compile(regex.pattern.replace("$", ""))
+        match = unconstrained_regex.match(shot_name)
+        if match:
+            return match.groups()[0]
+
+    raise ValueError("Cannot extract sequence name from '%s'" % shot_name)
