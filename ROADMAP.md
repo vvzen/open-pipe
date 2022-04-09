@@ -82,8 +82,7 @@ To make the mechanism generic, the logic for setting this path should be customi
 
 # TODO
 
-## General
-### Implement a 'deactivate' type of script for source_me.fish & source_me.bash
+## Implement a 'deactivate' type of script for source_me.fish & source_me.bash
 
 This should remove any changes that the sourcing of these files brought to the environment.
 The is similar to how a `conda deactivate` works, or a `module unload` (for tcl modules)
@@ -94,3 +93,27 @@ Right now there's no programmatic validation of the config files.
 
 If a required entry is missing, it's up to the implementation of the single function relying on that config file to properly handle this exception.
 Instead, the `get_config(name)` call should automatically validate all of the entries based on the JSONschema of that config.
+
+## Implement sequence and shot creation
+
+Something like:
+
+`op-show create-sequence --name sc010` ?
+
+and
+
+`op-show create-shot --name sc010_0010` ?
+
+Or
+`op-sequence create --name sc010`
+
+and
+
+`op-shot create --name sc010_0010`
+
+Probably the second, to keep the CLIs simple and minimal.
+Also, in a future we might have `op-asset create`, etc.
+
+## Implement caching of config files
+
+## Write docstrings where missing
