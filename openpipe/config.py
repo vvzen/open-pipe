@@ -16,14 +16,15 @@ def get_config_path(name):
     current_config_path = os.getenv("OPENPIPE_CONFIG_PATH")
     if not current_config_path:
         raise EnvironmentError("OPENPIPE_CONFIG_PATH is not defined, "
-                               "can't search.")
+                               "can't search for configs!")
 
     matching_files = []
     paths_to_search = current_config_path.split(":")
 
     for path in paths_to_search[::-1]:
         if not os.path.exists(path):
-            log.warning("Skipping non-existent path: %s", path)
+            log.warning("Skipping non-existent path "
+                        "in OPENPIPE_CONFIG_PATH: %s", path)
             continue
 
         files = [
