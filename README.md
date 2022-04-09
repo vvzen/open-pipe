@@ -28,13 +28,23 @@ Fore more info on the other CLI offered, see https://github.com/vvzen/open-pipe/
 
 ## Getting started
 
-NB: Install and use the `fish` shell (https://fishshell.com) if you want to use the CLIs.
+Install and use the `fish` shell (https://fishshell.com) if you want to use the CLIs.
 
-If using fish: `source openpipe/source_me.fish`.
-If using bash: `source openpipe/source_me.fish`.
+Then do a `source openpipe/source_me.fish`.
 
-Now you'll have openpipe in your pythonpath.
+NB: The `source_me.bash` script is meant to be used just for running the unit tests in the CI.
+
+Now you'll have `openpipe` in your `PYTHONPATH`, and the other CLIs in your `PATH`.
+
+Add `alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish'` to your fish config.
+
+One liner:
+```bash
+echo "alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish'" >> ~/.config/fish/config.fish
+```
+
 Customize the `./configs/*.toml` files to your needs, and put them in a directory under the `OPENPIPE_CONFIG_PATH`.
+For more info, see the section on environment variables.
 
 Create a project using `op-show create`. Check the `op-show create --help` for more info.
 
