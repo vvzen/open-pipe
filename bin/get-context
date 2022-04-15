@@ -17,7 +17,6 @@ OPENPIPE_SHOW=path,OPENPIPE_SEQUENCE=sc010,OPENPIPE_SHOT=sc010_0020
 
 import sys
 
-import openpipe.log
 from openpipe.context import make_context_from_path
 
 
