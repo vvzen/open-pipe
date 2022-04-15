@@ -14,14 +14,14 @@ def main():
 
     # Project creation
     create_parser = subcommands.add_parser("create",
-                           help="create show",
-                           description="Creates a show on disk/etc.")
+                           help="create shot",
+                           description="Creates a shot on disk/etc.")
 
     create_parser.add_argument(
         '-n',
         '--name',
         type=str,
-        help="Name of the show.")
+        help="Name of the shot")
 
     steps_group = create_parser.add_mutually_exclusive_group()
 
