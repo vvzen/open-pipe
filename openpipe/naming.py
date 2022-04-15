@@ -19,7 +19,7 @@ def get_naming_regexes(name):
     patterns = naming_entry.get("patterns")
     if not patterns:
         raise MalformedConfigError("Naming entry for '%s' "
-                                  "didn't contain a 'patterns' key." % name)
+                                   "didn't contain a 'patterns' key." % name)
 
     compound = naming_entry.get("appends_to")
     if compound:
@@ -32,8 +32,8 @@ def get_naming_regexes(name):
         other_entry = naming_config.get(compound)
         if not other_entry:
             raise MalformedConfigError("Naming entry for '%s' is compounded, "
-                                      "but the other entry specified ('%s') "
-                                      "doesn't exist." % (name, compound))
+                                       "but the other entry specified ('%s') "
+                                       "doesn't exist." % (name, compound))
 
         other_entry_patterns = other_entry.get("patterns")
         if not other_entry_patterns:
