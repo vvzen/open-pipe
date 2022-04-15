@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+import argparse
+
+from openpipe.sequence import (create_sequence, ALL_STEPS, DEFAULT_STEPS)
+
+def main():
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    subcommands = parser.add_subparsers(
+        dest="command",
+        help="sub-commands (see <subcommand> -h for more help)")
+
+    # Project creation
+    create_parser = subcommands.add_parser("create",
+                           help="create sequence",
+                           description="Creates a sequence on disk/etc.")
+
+    create_parser.add_argument(
+        '-n',
+        '--name',
+        type=str,
+        help="Name of the sequence")
+
+    steps_group = create_parser.add_mutually_exclusive_group()
+
+    steps_group.add_argument(
+        '--steps',
+        type=str,
+        required=False,
+        help="Comma separated list of steps to run for this show creation")
+
+    steps_group.add_argument(
+        '--continue-from',
+        type=str,
+        choices=ALL_STEPS,
+        required=False,
+        help="Name of step to continue the show creation from")
+
+    args = parser.parse_args()
+
+    if not args.steps:
+        steps = DEFAULT_STEPS
+    else:
+        steps = [a.strip() for a in args.steps.split(",")]
+
+    if args.continue_from:
+        step_index = ALL_STEPS.index(args.continue_from)
+        steps = ALL_STEPS[step_index::]
+
+    create_sequence(args.name, steps)
+
+
+if __name__ == "__main__":
+    main()
