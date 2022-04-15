@@ -1,8 +1,11 @@
 import os
 
 import pytest
+from pyfakefs.fake_filesystem_unittest import Patcher
 
 from openpipe.context import make_context_from_path, OpenPipeContext
+
+from conftest import add_openconfig_configs_to_pyfakefs
 
 
 @pytest.mark.parametrize("path, expected_context", [
@@ -29,7 +32,9 @@ from openpipe.context import make_context_from_path, OpenPipeContext
                  OpenPipeContext(show="my_very_elaborate_show_name", sequence="sc040", shot="sc040_0050")),
 ])
 def test_make_context_from_path_for_sequences_and_shots(path, expected_context):
-    assert make_context_from_path(path) == expected_context
+    with Patcher() as patcher:
+        add_openconfig_configs_to_pyfakefs(patcher.fs)
+        assert make_context_from_path(path) == expected_context
 
 
 @pytest.mark.parametrize("path, with_pipe_directory, expected_context", [
@@ -46,24 +51,19 @@ def test_make_context_from_path_for_sequences_and_shots(path, expected_context):
                  True,
                  OpenPipeContext(show="my_show_name")),
 ])
-def test_make_context_from_path_for_show(fs, path, with_pipe_directory, expected_context):
-    # NB: 'fs' is the pyfake-fs fixture
+def test_make_context_from_path_for_show(path, with_pipe_directory, expected_context):
 
-    # Add relevant directories to the virtual filesystem
-    config_path = os.getenv("OPENPIPE_CONFIG_PATH", "")
-    for config_path in config_path.split(":"):
-        fs.add_real_directory(config_path)
+    with Patcher() as patcher:
+        add_openconfig_configs_to_pyfakefs(patcher.fs)
 
-    # This call has been patched, so it will create stuff in-memory,
-    # not on disk
-    os.makedirs(path)
+        patcher.fs.create_dir(path)
 
-    if with_pipe_directory:
-        os.makedirs(os.path.join(path, "openpipe", "etc"))
+        if with_pipe_directory:
+            patcher.fs.create_dir(os.path.join(path, "openpipe", "etc"))
 
-    assert make_context_from_path(path) == expected_context
+        assert make_context_from_path(path) == expected_context
 
-
+@pytest.mark.to_test
 @pytest.mark.parametrize("path, with_sequence_directory, sequence_name, expected_context", [
     # A valid sequence name
     pytest.param("/net/shows/my_show_name",
@@ -82,18 +82,14 @@ def test_make_context_from_path_for_show(fs, path, with_pipe_directory, expected
                  None,
                  OpenPipeContext(show=None)),
 ])
-def test_make_context_from_path_for_show_with_sequences(fs, path, with_sequence_directory, sequence_name, expected_context):
+def test_make_context_from_path_for_show_with_sequences(path, with_sequence_directory, sequence_name, expected_context):
 
-    # Add relevant directories to the virtual filesystem
-    config_path = os.getenv("OPENPIPE_CONFIG_PATH", "")
-    for config_path in config_path.split(":"):
-        fs.add_real_directory(config_path)
+    with Patcher() as patcher:
+        add_openconfig_configs_to_pyfakefs(patcher.fs)
 
-    # This call has been patched, so it will create stuff in-memory,
-    # not on disk
-    os.makedirs(path)
+        patcher.fs.create_dir(path)
 
-    if with_sequence_directory:
-        os.makedirs(os.path.join(path, sequence_name))
+        if with_sequence_directory:
+            patcher.fs.create_dir(os.path.join(path, sequence_name))
 
-    assert make_context_from_path(path) == expected_context
+        assert make_context_from_path(path) == expected_context

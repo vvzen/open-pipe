@@ -55,7 +55,7 @@ STEP_FUNCTION_MAP = {
 }
 
 
-def create_sequence(name, steps):
+def create_sequence(name, steps=DEFAULT_STEPS, raise_exc=False):
     log.info("Sequence creation has started.")
     log.info("Sequence name is '%s'", name)
 
@@ -72,9 +72,12 @@ def create_sequence(name, steps):
         try:
             step_func(name)
         except Exception:
-            log.error("Failed to run step '%s'", step_name)
-            log.error("Follows original exception:")
-            traceback.print_exc()
+            if raise_exc:
+                raise
+            else:
+                log.error("Failed to run step '%s'", step_name)
+                log.error("Follows original exception:")
+                traceback.print_exc()
             return
 
     log.info("Shot creation completed.")

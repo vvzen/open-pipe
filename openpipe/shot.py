@@ -45,7 +45,6 @@ def create_shot_on_disk(shot_name):
         raise ValueError("'%s' is not a valid shot name. "
                          "See the above^ log for more info.")
 
-
     sequence_name = sequence_name_from_shot_name(shot_name)
     sequence_path = create_sequence_on_disk(sequence_name)
 
@@ -64,7 +63,7 @@ STEP_FUNCTION_MAP = {
 }
 
 
-def create_shot(name, steps):
+def create_shot(name, steps=DEFAULT_STEPS, raise_exc=False):
     log.info("Shot creation has started.")
     log.info("Shot name is '%s'", name)
 
@@ -81,9 +80,12 @@ def create_shot(name, steps):
         try:
             step_func(name)
         except Exception:
-            log.error("Failed to run step '%s'", step_name)
-            log.error("Follows original exception:")
-            traceback.print_exc()
+            if raise_exc:
+                raise
+            else:
+                log.error("Failed to run step '%s'", step_name)
+                log.error("Follows original exception:")
+                traceback.print_exc()
             return
 
     log.info("Shot creation completed.")
