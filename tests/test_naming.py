@@ -25,6 +25,7 @@ SAMPLES_DIR = os.path.join(CURRENT_DIR, "sample_files")
 def test_is_shot_with_default_config(name, result):
     assert is_shot(name) == result
 
+
 @pytest.mark.parametrize("name,result", [
     pytest.param("sc010", True),
     pytest.param("sc120", True),
@@ -38,6 +39,7 @@ def test_is_sequence_with_default_config(name, result):
 
 
 @pytest.mark.parametrize("config_path", [
+    pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_compound_missing_patterns.toml")),
     pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_compound_undefined_patterns.toml")),
     pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_missing_shot_pattern.toml")),
     pytest.param(os.path.join(SAMPLES_DIR, "configs", "show_naming_missing_appends_with.toml")),

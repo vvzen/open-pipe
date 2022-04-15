@@ -6,7 +6,7 @@ EG: sc010 OR previz010\
 """
 
 [shot]
-appends_to = "Sequence"
+appends_to = "sequence"
 appends_with = "_"
 patterns = ["[0-9]{4}"]
 description = "Four digits. EG: 0010"
