@@ -18,3 +18,17 @@ def test_create_shot(monkeypatch, shot_name):
     with Patcher() as patcher:
         add_openconfig_configs_to_pyfakefs(patcher.fs)
         create_shot(shot_name, raise_exc=True)
+
+
+@pytest.mark.parametrize("shot_name", [
+    pytest.param("sc020_000010"),
+    pytest.param("SC020_0010"),
+    pytest.param("Previz010_0010"),
+])
+def test_create_invalid_shot(monkeypatch, shot_name):
+    monkeypatch.setenv("OPENPIPE_SHOW", "a_test_show")
+
+    with pytest.raises(ValueError):
+        with Patcher() as patcher:
+            add_openconfig_configs_to_pyfakefs(patcher.fs)
+            create_shot(shot_name, raise_exc=True)
