@@ -31,7 +31,14 @@ end
 
 # Implementation of filesystem navigation functionality
 function _go
-    set destination_path $argv
+    set destination_path (realpath $argv)
+
+    # Strip eventual '/' at the end
+    set destination_splitted (string split '/' $destination_path)
+    #set destination_length (string length $destination_splitted)[-1]
+    if test (string length $destination_splitted)[-1] -eq 0
+        set destination_path (string join '/' $destination_splitted[1..-2])
+    end
 
     # Check destination is valid
     if not test -d $destination_path
@@ -41,7 +48,6 @@ function _go
 
     # TODO: make into a single function since we use
     # this approach in different parts
-
     # Parse destination directory to understand environment
     set op_env_vars (string split \n -- (echo (realpath $destination_path) | get-context | tr "," "\n"))
     for openpipe_env_var in $op_env_vars
@@ -49,16 +55,32 @@ function _go
         set key $op_env_var_split[1]
         set value $op_env_var_split[2]
         if string match -v '*unknown*' $value > /dev/null
-            echo "Setting $key to $value"
+            if string match "DEBUG*" $OPENPIPE_LOG
+                echo "Setting $key to $value"
+            end
             set --global --export $key $value
         end
     end
 
     # Set environment variables
-    # Config
-    if string match 'etc/config' $destination_path
-        set --global --export --prepend --path OPENPIPE_CONFIG_PATH $destination_path
+
+    # OPENPIPE_CONFIG_PATH
+    # First: we search below
+    set new_config_path "$destination_path/openpipe/etc/config"
+    if test -d $new_config_path
+        if not contains $new_config_path $OPENPIPE_CONFIG_PATH
+            set --global --export --prepend --path OPENPIPE_CONFIG_PATH $new_config_path
+        end
     end
+    # Secondly, we search above
+    # TODO:
+
+    # OCIO
+    set ocio_path "$destination_path/openpipe/etc/config.ocio"
+    if test -e $ocio_path
+        set --global --export --path OCIO $ocio_path
+    end
+
     # PATH
     if string match 'bin' $destination_path
         set --global --export --prepend --path PATH $destination_path
@@ -70,7 +92,9 @@ function _go
         set env_var_split (string split = $env_var)
         set key $env_var_split[1]
         set value $env_var_split[2]
-        echo "Setting $key to $value"
+        if string match "DEBUG*" $OPENPIPE_LOG
+            echo "Setting $key to $value"
+        end
         set --global --export $key $value
     end
 
@@ -98,9 +122,14 @@ function _display_env
             echo "$env_var" | sed 's/=/: /g'
         end
     end
+
+    echo "OPENPIPE_CONFIG_PATH:"
+    for path in $OPENPIPE_CONFIG_PATH
+        echo $path
+    end
+
     printf "\n"
 end
-
 
 # No subcommands provided?
 if test (count $argv) -eq 0
