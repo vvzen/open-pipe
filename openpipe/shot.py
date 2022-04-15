@@ -41,9 +41,9 @@ def create_shot_on_disk(shot_name):
     # First, validation
     if not is_shot(shot_name):
         regex_description = shot_config.get('description')
-        log.warning(regex_description)
+        log.warning("A valid shot name should be:\n\t%s", regex_description)
         raise ValueError("'%s' is not a valid shot name. "
-                         "See the above^ log for more info.")
+                         "See the above^ log for more info." % shot_name)
 
     sequence_name = sequence_name_from_shot_name(shot_name)
     sequence_path = create_sequence_on_disk(sequence_name)

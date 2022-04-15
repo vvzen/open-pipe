@@ -33,7 +33,7 @@ def create_sequence_on_disk(sequence_name):
     # First, validation
     if not is_sequence(sequence_name):
         regex_description = sequence_config.get('description')
-        log.warning(regex_description)
+        log.warning("A valid sequence name should be:\n\t%s", regex_description)
         raise ValueError("'%s' is not a valid sequence name. "
                          "See the above^ log for more info.")
 
