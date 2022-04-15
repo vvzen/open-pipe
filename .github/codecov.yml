@@ -4,5 +4,5 @@ coverage:
       default:
         # basic
         target: 90%
-        threshold: 5%
+        threshold: 10%
         base: auto
