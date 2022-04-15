@@ -41,11 +41,9 @@ def parse_dir_tree_schema_line(line):
 
     match = SCHEMA_LINE_REGEX.match(line)
     if not match:
-        return
+        raise ValueError("Failed to parse line from schema: '%s'" % line)
 
     dict_result = match.groupdict()
-    if not dict_result:
-        return
 
     # Convert from the classic '755' notation expressed in octal
     # to its true integer equivalent
@@ -98,8 +96,6 @@ def read_directories_from_schema(schema_path):
 
     for index, line in enumerate(lines):
         dir_info = parse_dir_tree_schema_line(line)
-        if not dir_info:
-            continue
 
         indent = detect_indent(line)
 
