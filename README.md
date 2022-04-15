@@ -41,9 +41,9 @@ Add `alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish
 
 For example (in fish):
 ```bash
-$ set DOWNLOAD_DIR /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish
+$ set DOWNLOADED_FILE /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish
 $ echo "# OpenPipe" >> ~/.config/fish/config.fish
-$ echo "alias op='source $DOWNLOAD_DIR" >> ~/.config/fish/config.fish
+$ echo "alias op='source $DOWNLOADED_FILE" >> ~/.config/fish/config.fish
 ```
 
 Customize the `./configs/*.toml` files to your needs, and put them in a directory under the `OPENPIPE_CONFIG_PATH`.
@@ -71,10 +71,16 @@ By default, it's not set.
 Set it to "DEBUG" to enable additional debugging.
 Set it to something like `DEBUG %(asctime)s-%(filename)s:` to specify a custom string for the logging formatter used by OpenPipe.
 
+Example command (fish):
+```bash
+set --global --export OPENPIPE_LOG "DEBUG %(asctime)s-%(filename)s:"
+```
+
 ## OPENPIPE_CONFIG_PATH
 
 Search path of the configuration files (.toml) used by OpenPipe.
 
 > Why `toml` and not JSON, yaml, ini, etc.. ? See the [ROADMAP.md](https://github.com/vvzen/open-pipe/blob/main/ROADMAP.md)
 
-By default, when doing a `op go` to any directory, if there's a `etc/config` directory above your current directory, it will be prepended to your `OPENPIPE_CONFIG_PATH`.
+By default, when doing a `op go` to any directory, if there's a `openpipe/etc/config` directory below your current directory, it will be prepended to your `OPENPIPE_CONFIG_PATH`.
+If there is none above, `op go` will start walking up from your cwd tries to set one.
