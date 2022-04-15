@@ -1,9 +1,13 @@
+import os
+
 import pytest
 
 from openpipe.show_scheme.core import (DirInfo, parse_dir_tree_schema_line,
                                        detect_indent, create_project,
                                        read_directories_from_schema,
                                        get_path_to_current_show_scheme)
+
+from conftest import SAMPLES_DIR
 
 @pytest.mark.parametrize("input_line,output", [
     pytest.param("asset 755", DirInfo(name="asset", permissions=0o755, sticky=False)),
@@ -36,20 +40,34 @@ def test_read_directories_from_schema():
     current_schema_path = get_path_to_current_show_scheme()
     read_directories_from_schema(current_schema_path)
 
-@pytest.mark.parametrize("project_name", [
-    pytest.param("something"),
-    pytest.param("Some Name"),
+@pytest.mark.parametrize("schema_path", [
+    pytest.param(os.path.join(SAMPLES_DIR, "schemas", "schema_with_wrong_indentation.openpipe"))
 ])
-def test_create_project(monkeypatch, fs, project_name):
-    # Add a real file to the fake filesystem
-    # See http://jmcgeheeiv.github.io/pyfakefs/master/usage.html#access-to-files-in-the-real-file-system
+def test_read_directories_from_schema_wrong_schemas(schema_path):
+    with pytest.raises(ValueError):
+        read_directories_from_schema(schema_path)
+
+
+@pytest.mark.parametrize("project_name, is_missing_root_path", [
+    pytest.param("something", False),
+    pytest.param("Some Name", True),
+])
+def test_create_project(monkeypatch, fs,
+                        project_name, is_missing_root_path):
+
     current_schema_path = get_path_to_current_show_scheme()
     fs.add_real_file(current_schema_path)
 
     # Create a fake directory
     root_path = "/tmp/my/root"
-    fs.create_dir(root_path)
+    if not is_missing_root_path:
+        fs.create_dir(root_path)
 
     # Mock the reply from the user
     monkeypatch.setattr("builtins.input", lambda prompt="": "y")
-    create_project(project_name, root_path)
+
+    if is_missing_root_path:
+        with pytest.raises(OSError):
+            create_project(project_name, root_path)
+    else:
+        create_project(project_name, root_path)
