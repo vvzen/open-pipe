@@ -26,55 +26,61 @@ For more info on how to install `fish`, please see: https://fishshell.com
 
 The reason for choosing fish is that it's a joy to write scripts in fish, plus its autocompletion and ease of use makes it incredibly user friendly. Since `fish` is not POSIX compliant, my goal is mostly to use it for user facing tools.
 
-Fore more info on the other CLI offered, see https://github.com/vvzen/open-pipe/blob/main/bin/README.md
+For more info on the other CLIs offered, see https://github.com/vvzen/open-pipe/blob/main/bin/README.md
+
+
+## Requirements
+
+Poetry, for installing the dependencies: https://github.com/python-poetry/poetry
+
+Install instructions: https://python-poetry.org/docs/master/#installing-with-the-official-installer
+
+
+Fish, the shell: https://fishshell.com
 
 ## Getting started
 
-Install and use the `fish` shell if you want to use the CLIs (`op go`, `op display-env`, etc.).
-
-macOS:
-```bash
-$ brew install fish
-```
-
-Ubuntu:
-```bash
-$ sudo apt-add-repository ppa:fish-shell/release-3
-$ sudo apt update
-$ sudo apt install fish
-```
-
-Centos7:
-```bash
-$ cd /etc/yum.repos.d/
-$ wget https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_7/shells:fish:release:3.repo
-$ yum install fish
-```
-
-For more info on how to install fish, see: https://fishshell.com
-
-Then do a
-```bash
-$ source openpipe/source_me.fish
-```
-
-NB: The `source_me.bash` script is meant to be used just for running the unit tests in the CI.
-
+Clone the repo, install fish, install the dependencies via poetry, and finally run `source openpipe/source_me.fish`.
 Now you'll have `openpipe` in your `PYTHONPATH`, and the other CLIs in your `PATH`.
 
-Add `alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish'` to your fish config.
+Add `alias op='source /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish'` to your fish config to be able to do run commands like `op go`, etc.
 
-For example (in fish):
+Example commands for macOS:
 ```bash
-$ set DOWNLOADED_FILE /path/to/where/you/have/downloaded/openpipe/bin/op/op.fish
+# Install fish and poetry
+$ brew install fish
+$ curl -sSL https://install.python-poetry.org | python3 -
+$ poetry completions fish > ~/.config/fish/completions/poetry.fish
+
+# Clone the repo
+$ git clone git@github.com:vvzen/open-pipe.git
+
+# Install the dependencies via poetry
+$ poetry install -vv
+
+# Then, to have openpipe available:
+$ cd open-pipe
+$ source openpipe/source_me.fish
+
+# Set your custom alias
+$ set DOWNLOADED_FILE bin/op/op.fish
 $ echo "# OpenPipe" >> ~/.config/fish/config.fish
 $ echo "alias op='source $DOWNLOADED_FILE" >> ~/.config/fish/config.fish
+
+# Check if everything is working fine
+$ op go .
+$ op-show --help
 ```
 
 Customize the `./configs/*.toml` files to your needs, and put them in a directory under the `OPENPIPE_CONFIG_PATH`.
 For more info, see the section on environment variables.
 
-Create a project using `op-show create`. Check the `op-show create --help` for more info.
+### Try it out!
+
+Now try to create a project using `op-show create`.
+Create a shot using `op-shot create`.
+
+For each CLI, check the `--help` for more info and examples.
 
 ## Design goals
 
