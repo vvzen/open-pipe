@@ -11,6 +11,7 @@ authors = [
 python = "~3.7"
 tomli = "~2.0"
 six = "~1.16"
+PySide2 = "~5.13.2"
 
 [tool.poetry.dev-dependencies]
 coverage = "6.3.2"
