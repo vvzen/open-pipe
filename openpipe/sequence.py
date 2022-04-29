@@ -49,12 +49,22 @@ def create_sequence_on_disk(sequence_name):
 
     return sequence_path
 
+def create_sequence_on_ftrack(name):
+    try:
+        import openpipe_hooks.ftrack
+        return openpipe_hooks.ftrack.create_sequence(name)
+    except ImportError:
+        log.warning("No hook defined for 'hooks.ftrack.create_sequence")
+        log.warning("Skipping.")
+
 
 STEP_FUNCTION_MAP = {
     SequenceCreationSteps.setup_on_disk: create_sequence_on_disk,
+    SequenceCreationSteps.setup_on_ftrack: create_sequence_on_ftrack,
 }
 
 
+# -----------------------------------------------------------------------------
 def create_sequence(name, steps=DEFAULT_STEPS, raise_exc=False):
     log.info("Sequence creation has started.")
     log.info("Sequence name is '%s'", name)
