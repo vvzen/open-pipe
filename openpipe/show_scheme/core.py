@@ -1,7 +1,7 @@
 import os
 import re
-import sys
 import stat
+import errno
 import dataclasses
 from collections import deque
 
@@ -142,11 +142,19 @@ def create_project(project_name, root_path):
 
     # Create with open permissions..
     project_root_path = os.path.join(root_path, project_name)
-    os.mkdir(project_root_path, mode=0o777)
+    try:
+        os.mkdir(project_root_path, mode=0o777)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
     for dir_info in dirs_to_create:
         current_path = os.path.join(project_root_path, dir_info.path)
-        os.mkdir(current_path)
+        try:
+            os.mkdir(current_path)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
         os.chmod(current_path, 0o777)
 
     # ..and then lock down everything

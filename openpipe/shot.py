@@ -60,12 +60,8 @@ def create_shot_on_disk(shot_name):
 
 
 def create_shot_on_ftrack(name):
-    try:
-        import openpipe_hooks.ftrack
-        return openpipe_hooks.ftrack.create_shot(name)
-    except ImportError:
-        log.warning("No hook defined for 'hooks.ftrack.create_shot")
-        log.warning("Skipping.")
+    import openpipe_hooks.ftrack
+    return openpipe_hooks.ftrack.create_shot(name)
 
 
 STEP_FUNCTION_MAP = {
