@@ -15,4 +15,5 @@ def add_openconfig_configs_to_pyfakefs(fs):
     paths_to_search = current_config_path.split(":")
 
     for path in paths_to_search[::-1]:
+        print(f"Adding {path} as real directory to pyfakefs")
         fs.add_real_directory(path)
