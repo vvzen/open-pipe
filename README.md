@@ -53,7 +53,8 @@ $ yum install fish
 
 For more info on how to install fish, see: https://fishshell.com
 
-Then do a ```bash
+Then do a
+```bash
 $ source openpipe/source_me.fish
 ```
 
