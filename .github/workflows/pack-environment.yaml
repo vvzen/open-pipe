@@ -25,17 +25,13 @@ jobs:
           bash ~/miniconda.sh -b -f -p $HOME/miniconda
           source $HOME/miniconda/bin/activate
           conda init
-      - name: Install conda-pack
-        run: |
-          source $HOME/miniconda/bin/activate
-          conda init
-          conda install conda-pack --yes
       - name: Install dependencies
         run: |
           source $HOME/miniconda/bin/activate
           conda init
           conda create -n openpipe-env python==3.7 --yes
           conda activate openpipe-env
+          conda install conda-pack --yes
           pip install poetry
           poetry install -vv
           conda-pack --n-threads -1 --output openpipe_dependencies.tar.gz
