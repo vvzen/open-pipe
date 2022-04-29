@@ -30,9 +30,32 @@ Fore more info on the other CLI offered, see https://github.com/vvzen/open-pipe/
 
 ## Getting started
 
-Install and use the `fish` shell (https://fishshell.com) if you want to use the CLIs.
+Install and use the `fish` shell if you want to use the CLIs (`op go`, `op display-env`, etc.).
 
-Then do a `source openpipe/source_me.fish`.
+macOS:
+```bash
+$ brew install fish
+```
+
+Ubuntu:
+```bash
+$ sudo apt-add-repository ppa:fish-shell/release-3
+$ sudo apt update
+$ sudo apt install fish
+```
+
+Centos7:
+```bash
+$ cd /etc/yum.repos.d/
+$ wget https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_7/shells:fish:release:3.repo
+$ yum install fish
+```
+
+For more info on how to install fish, see: https://fishshell.com
+
+Then do a ```bash
+$ source openpipe/source_me.fish
+```
 
 NB: The `source_me.bash` script is meant to be used just for running the unit tests in the CI.
 
