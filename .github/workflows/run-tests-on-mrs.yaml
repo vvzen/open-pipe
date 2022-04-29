@@ -1,5 +1,10 @@
-name: Run tests on Pull Request
-on: [pull_request, workflow_dispatch]
+name: Run Unit Tests
+
+on:
+  # Run this workflow manually from the Actions tab
+  workflow_dispatch:
+  # On PRs
+  pull_request:
 jobs:
   run-tests-on-py37:
     runs-on: ubuntu-latest
