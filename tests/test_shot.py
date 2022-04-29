@@ -5,6 +5,8 @@ from openpipe.shot import create_shot, ShotCreationSteps, ALL_STEPS
 from conftest import add_openconfig_configs_to_pyfakefs
 
 
+# Test how we handle things WITHIN our supported behaviour
+# ------------------------------------------------------------------------------
 @pytest.mark.parametrize("shot_name", [
     pytest.param("sc010_0010"),
     pytest.param("sc010_0020"),
@@ -17,6 +19,20 @@ def test_create_shot(monkeypatch, shot_name):
     with Patcher() as patcher:
         add_openconfig_configs_to_pyfakefs(patcher.fs)
         create_shot(shot_name, raise_exc=True)
+
+
+@pytest.mark.parametrize("shot_name", [
+    pytest.param("sc010_0010"),
+    pytest.param("previz010_0010"),
+])
+def test_create_shot_twice(monkeypatch, shot_name):
+    monkeypatch.setenv("OPENPIPE_SHOW", "a_test_show")
+
+    with Patcher() as patcher:
+        add_openconfig_configs_to_pyfakefs(patcher.fs)
+        create_shot(shot_name, raise_exc=True)
+        create_shot(shot_name, raise_exc=True)
+
 
 @pytest.mark.parametrize("shot_name", [
     pytest.param("sc010_0010"),
@@ -31,6 +47,9 @@ def test_create_shot_all_steps(monkeypatch, shot_name):
         add_openconfig_configs_to_pyfakefs(patcher.fs)
         create_shot(shot_name, steps=ALL_STEPS, raise_exc=True)
 
+
+# Test how we handle things OUTSIDE our supported behaviour
+# ------------------------------------------------------------------------------
 @pytest.mark.parametrize("shot_name, steps", [
     # Only bad steps
     pytest.param("sc010_0010", ["some-funky-step"]),

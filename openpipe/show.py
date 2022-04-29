@@ -3,6 +3,7 @@
 
 import os
 import shutil
+import filecmp
 import traceback
 import subprocess
 
@@ -40,8 +41,7 @@ def create_show_on_disk(show_name, root_path):
     show_path = os.path.join(root_path, show_name)
     if os.path.exists(show_path):
         log.warning("The top level dir '%s' already exists.", show_path)
-        log.warning("The show might be already setup on disk. Skipping step..")
-        return
+        log.warning("The show might be already setup on disk..")
 
     openpipe.show_scheme.core.create_project(show_name, root_path)
     log.info("Result on disk (first 4 levels) :")
@@ -50,41 +50,13 @@ def create_show_on_disk(show_name, root_path):
 
 def setup_ocio_for_show(show_name, root_path):
     log.info("\tSetting up default OCIO config")
-
-    try:
-        import openpipe_hooks.ocio
-        log.info("Found hook for 'hooks.ocio.")
-        return openpipe_hooks.ocio.setup_ocio_for_show(show_name, root_path)
-    except ImportError:
-        log.info("No hook defined for 'hooks.ocio.setup_ocio_for_show")
-        log.info("Using default implementation.")
-
-    source_config = os.path.join(CURRENT_DIR, "configs", "aces_rec709_view.ocio")
-    destination_dir = os.path.join(root_path, show_name, "openpipe", "etc")
-    destination_path = os.path.join(destination_dir, "config.ocio")
-
-    # NB: this is currently heavily coupled with the show schema tree
-    if not os.path.exists(os.path.dirname(destination_dir)):
-        log.error("The show is missing an expected directory: '%s'",
-                  destination_dir)
-        raise RuntimeError("Error during OCIO config copy. "
-                           "See error message above^.")
-
-    if os.path.exists(destination_path):
-        if os.path.samefile(source_config, destination_path):
-            log.info("\tSkipping OCIO config copy since file already exists.")
-
-    shutil.copyfile(source_config, destination_path)
-    log.info("\tOCIO config copied to %s", destination_path)
+    import openpipe_hooks.ocio
+    return openpipe_hooks.ocio.setup_ocio_for_show(show_name, root_path)
 
 
 def create_project_on_ftrack(show_name, root_path):
-    try:
-        import openpipe_hooks.ftrack
-        return openpipe_hooks.ftrack.create_project(show_name, root_path)
-    except ImportError:
-        log.warning("No hook defined for 'hooks.ftrack.create_project")
-        log.warning("Skipping.")
+    import openpipe_hooks.ftrack
+    return openpipe_hooks.ftrack.create_project(show_name, root_path)
 
 
 STEP_FUNCTION_MAP = {
@@ -114,7 +86,7 @@ def get_show_root():
     return root_mount_path
 
 
-def create_show(name, steps=DEFAULT_STEPS):
+def create_show(name, steps=DEFAULT_STEPS, raise_exc=False):
 
     log.info("Show creation has started.")
     log.info("Show name is '%s'", name)
@@ -148,6 +120,8 @@ def create_show(name, steps=DEFAULT_STEPS):
         try:
             step_func(safe_project_name, show_root)
         except Exception:
+            if raise_exc:
+                raise
             log.error("Failed to run step '%s'", step_name)
             log.error("Follows original exception:")
             traceback.print_exc()
