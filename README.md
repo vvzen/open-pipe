@@ -1,6 +1,7 @@
 # Open-Pipe
 
 [![license](https://img.shields.io/github/license/vvzen/open-pipe)](https://github.com/vvzen/open-pipe/blob/main/LICENSE) [![codecov](https://codecov.io/gh/vvzen/open-pipe/branch/main/graph/badge.svg?token=JW6UY6ZFFP)](https://codecov.io/gh/vvzen/open-pipe) ![Generic badge](https://img.shields.io/badge/status-wip-yellow.svg)
+[![Run tests on Pull Request](https://github.com/vvzen/open-pipe/actions/workflows/run-tests-on-mrs.yaml/badge.svg)](https://github.com/vvzen/open-pipe/actions/workflows/run-tests-on-mrs.yaml)
 
 ## TL;DR
 
