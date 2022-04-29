@@ -1,5 +1,5 @@
 name: Run tests on Pull Request
-on: [pull_request]
+on: [pull_request, workflow_dispatch]
 jobs:
   run-tests-on-py37:
     runs-on: ubuntu-latest
