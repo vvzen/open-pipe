@@ -1,0 +1,47 @@
+name: Package Environment
+
+# For notes on artifacts, see
+# https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
+# For info on conda-pack, see
+# https://conda.github.io/conda-pack/
+
+# TODO: wrap some stuff in a bash script so that we can
+# check the miniconda md5sum easily
+
+on:
+  # Run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  pack-environment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v2
+      - name: Install conda
+        run: |
+          wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.11.0-Linux-x86_64.sh -O ~/miniconda.sh
+          bash ~/miniconda.sh -b -p -f $HOME/miniconda
+          source $HOME/miniconda/bin/activate
+          conda init
+      - name: Install conda-pack
+        run: |
+          source $HOME/miniconda/bin/activate
+          conda init
+          conda install conda-pack --yes
+      - name: Install dependencies
+        run: |
+          source $HOME/miniconda/bin/activate
+          conda init
+          conda create -n openpipe-env python==3.7 --yes
+          conda activate openpipe-env
+          pip install poetry
+          poetry install -vv
+          conda-pack --n-threads -1 --output openpipe_dependencies.tar.gz
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: package-dependencies
+          path: openpipe_dependencies.tar.gz
+
