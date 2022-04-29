@@ -22,7 +22,7 @@ jobs:
       - name: Install conda
         run: |
           wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.11.0-Linux-x86_64.sh -O ~/miniconda.sh
-          bash ~/miniconda.sh -b -p -f $HOME/miniconda
+          bash ~/miniconda.sh -b -f -p $HOME/miniconda
           source $HOME/miniconda/bin/activate
           conda init
       - name: Install conda-pack
