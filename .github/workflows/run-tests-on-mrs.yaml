@@ -22,8 +22,9 @@ jobs:
       - name: Install Fish-shell
         run: |
           sudo add-apt-repository ppa:fish-shell/release-3
-          sudo apt-get update
-          sudo apt install fish
+          sudo apt-get --assume-yes update
+          sudo apt --assume-yes install fish
+          cp $(which fish) /usr/local/bin/fish
       - name: Install Poetry
         run: |
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
