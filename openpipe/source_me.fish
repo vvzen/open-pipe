@@ -1,4 +1,4 @@
-# Source this file when you're doing dev stuff!
+# Source this file in order to get 'op' and 'open-pipe' available
 
 set this_dir (realpath (dirname (status -f)))
 
