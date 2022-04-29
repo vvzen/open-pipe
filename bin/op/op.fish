@@ -88,8 +88,10 @@ function _go
     # Custom env vars
     set custom_env_vars (command python -c 'import openpipe_hooks.env_vars as ev; ev.main()')
     for env_var in $custom_env_vars
-        # TODO: protect against the use of '=' in environment vars values
-        set env_var_split (string split = $env_var)
+        # Use Record Separator ASCII char 30 (\x1e in hexadecimal)
+        # to safely split key:values in strings
+        set separator (echo -e '\x1e')
+        set env_var_split (string split $separator $env_var)
         set key $env_var_split[1]
         set value $env_var_split[2]
         if string match "DEBUG*" $OPENPIPE_LOG
