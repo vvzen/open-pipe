@@ -96,3 +96,27 @@ def test_show_creation_wrong_openpipe_configs(monkeypatch, config_path):
 def test_show_creation_wrong_steps(name, steps):
     with pytest.raises(RuntimeError):
         openpipe.show.create_show(name, steps)
+
+
+@pytest.mark.behaviour_test
+@pytest.mark.parametrize("name", [
+    pytest.param("show_to_setup_twice"),
+])
+@pytest.mark.parametrize("user_reply", [
+    pytest.param("yes"),
+])
+def test_show_creation_twice(monkeypatch, name, user_reply):
+    # Try setting up the same show twice
+    # This helps us to understand how 'idempotent' the show creation really is
+
+    def mocked_input(*args, **kwargs):
+        return user_reply
+
+    def mocked_get_config_path(*args, **kwargs):
+        return os.path.join(SAMPLES_DIR, "configs", "sample_openpipe.toml")
+
+    monkeypatch.setattr("builtins.input", mocked_input)
+    monkeypatch.setattr("openpipe.config.get_config_path", mocked_get_config_path)
+
+    openpipe.show.create_show(name)
+    openpipe.show.create_show(name)

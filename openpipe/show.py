@@ -51,6 +51,14 @@ def create_show_on_disk(show_name, root_path):
 def setup_ocio_for_show(show_name, root_path):
     log.info("\tSetting up default OCIO config")
 
+    try:
+        import openpipe_hooks.ocio
+        log.info("Found hook for 'hooks.ocio.")
+        return openpipe_hooks.ocio.setup_ocio_for_show(show_name, root_path)
+    except ImportError:
+        log.info("No hook defined for 'hooks.ocio.setup_ocio_for_show")
+        log.info("Using default implementation.")
+
     source_config = os.path.join(CURRENT_DIR, "configs", "aces_rec709_view.ocio")
     destination_dir = os.path.join(root_path, show_name, "openpipe", "etc")
     destination_path = os.path.join(destination_dir, "config.ocio")
@@ -61,6 +69,10 @@ def setup_ocio_for_show(show_name, root_path):
                   destination_dir)
         raise RuntimeError("Error during OCIO config copy. "
                            "See error message above^.")
+
+    if os.path.exists(destination_path):
+        if os.path.samefile(source_config, destination_path):
+            log.info("\tSkipping OCIO config copy since file already exists.")
 
     shutil.copyfile(source_config, destination_path)
     log.info("\tOCIO config copied to %s", destination_path)
