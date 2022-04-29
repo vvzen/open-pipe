@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
   # On PRs
   pull_request:
+
 jobs:
   run-tests-on-py37:
     runs-on: ubuntu-latest
@@ -18,6 +19,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.7"
+      - name: Install Fish-shell
+        run: |
+          sudo add-apt-repository ppa:fish-shell/release-3
+          sudo apt-get update
+          sudo apt install fish
       - name: Install Poetry
         run: |
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
@@ -28,10 +34,14 @@ jobs:
         run: |
           source $HOME/.poetry/env
           poetry install -vv
-      - name: Run Tests
+      - name: Run Tests in bash
         run: |
           source $HOME/.poetry/env
-          ./run_tests.sh
+          ./run_tests.bash
+      - name: Run Tests in fish
+        run: |
+          source $HOME/.poetry/env
+          ./run_tests.fish
       - name: Update coverage
         uses: codecov/codecov-action@v2
         with:
