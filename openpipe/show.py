@@ -2,8 +2,6 @@
 """
 
 import os
-import shutil
-import filecmp
 import traceback
 import subprocess
 
