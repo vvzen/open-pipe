@@ -1,6 +1,24 @@
+# Legend
+# {context} -> Simple tokens. Each one will be considered a 'field'
+# {*work_area} -> Special tokens called 'Template partials'.
+#                 Ways to refer to other templates and stay DRY.
+# $SOME_NAME -> Environment variables.
+
+# Tokens explanation.
+# context_name -> Pass the bottom-most part of the context.
+# EG: For a shot, pass sc010_0010
+# context_path -> Pass the full path to the context.
+# EG: For a sequence, pass sc010/sc010_0010
+# task -> The name of the pipeline task.
+# EG: 'comp'
+# stream -> The name that identifies the stream of work.
+# EG: 'default', 'less-clouds', 'more-red'
+# version -> The version number, as a string already padded.
+# EG: '004', '001', '9999'
+
 # Workfiles. Basically anything that hasn't been published.
-work_area = "{shows_root}/{show_name}/{context}/work"
-default_workfile = "{$work_area}/{context}_{stream}_v{version}"
-maya_workfile = "{$default_workfile}.mb"
-nuke_workfile = "{$default_workfile}.nk"
-houdini_workfile = "{$default_workfile}.hip"
+work_area = "$OPENPIPE_SHOW/{context_path}/work"
+default_workfile = "{*work_area}/{context_name}_{task}_{stream}_v{version}"
+maya_workfile = "{*default_workfile}.mb"
+nuke_workfile = "{*default_workfile}.nk"
+houdini_workfile = "{*default_workfile}.hip"
