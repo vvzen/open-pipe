@@ -1,0 +1,6 @@
+# Workfiles. Basically anything that hasn't been published.
+work_area = "{shows_root}/{show_name}/{context}/work"
+default_workfile = "{$work_area}/{context}_{stream}_v{version}"
+maya_workfile = "{$default_workfile}.mb"
+nuke_workfile = "{$default_workfile}.nk"
+houdini_workfile = "{$default_workfile}.hip"
