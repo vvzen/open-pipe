@@ -11,6 +11,7 @@ authors = [
 python = "~3.7"
 tomli = "~2.0"
 six = "~1.16"
+ftrack-python-api = "~2.3.2"
 PySide2 = "~5.13.2"
 
 [tool.poetry.dev-dependencies]
