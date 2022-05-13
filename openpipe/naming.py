@@ -73,6 +73,17 @@ def is_sequence(input_name):
 
 
 def sequence_name_from_shot_name(shot_name):
+    """Retrieve the name of a sequence from a shot name, using the naming
+    regexes defined in the config.
+
+    :param shot_name: name of the shot
+    :type shot_name: str
+
+    :raises ValueError: if the given name is not a valid shot name
+
+    :return: the extracted sequence name
+    :rtype: str
+    """
 
     if not is_shot(shot_name):
         raise ValueError("'%s' is not a valid shot name")
