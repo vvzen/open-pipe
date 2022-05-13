@@ -1,10 +1,11 @@
+import os
+
 import pytest
 
-from openpipe.templates import render_template
+import openpipe.show
+from openpipe.templates import render_template, render_template_as_show_path
 
-
-@pytest.mark.behaviour_test
-@pytest.mark.parametrize("show_name,template_name,fields,expected_string", [
+test_data = [
     # 0. The vanilla template
     pytest.param(
         "test_show",
@@ -44,10 +45,29 @@ from openpipe.templates import render_template
         },
         "test_show/sc030/sc030_0010/work/sc030_0010_comp_default_v014.nk"
     )
-])
+]
+
+@pytest.mark.behaviour_test
+@pytest.mark.parametrize("show_name,template_name,fields,expected_string", test_data)
 def test_render_template(monkeypatch, show_name,
                          template_name, fields, expected_string):
 
     monkeypatch.setenv("OPENPIPE_SHOW", show_name)
 
     assert render_template(template_name, fields) == expected_string
+    assert render_template_as_show_path(template_name, fields)
+
+
+@pytest.mark.behaviour_test
+@pytest.mark.parametrize("show_name,template_name,fields,expected_string", test_data)
+def test_render_template_as_show_path(monkeypatch, show_name,
+                                      template_name, fields, expected_string):
+
+    monkeypatch.setenv("OPENPIPE_SHOW", show_name)
+    def mocked_get_show_root(*args, **kwargs):
+        return "/net/shows"
+
+    monkeypatch.setattr(openpipe.show, "get_show_root", mocked_get_show_root)
+    expected_path = os.path.join("/net/shows", expected_string)
+
+    assert render_template_as_show_path(template_name, fields) == expected_path
