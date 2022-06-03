@@ -1,7 +1,12 @@
 # Source this file to append the components of this library to the relevant paths
 
+echo $0
+
 this_dir=$(realpath $(dirname $0))
 new_python_path="$this_dir"
+
+echo $this_dir
+exit 0
 
 if [ -z "$PYTHONPATH" ]; then
     export PYTHONPATH="$new_python_path"
