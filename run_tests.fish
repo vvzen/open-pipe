@@ -30,7 +30,7 @@ else
     pytest tests --cov=openpipe --cov-report html
     set current_os (uname)
 
-    if string match "$current_os" "Darwin"
+    if string match "$current_os" "Darwin" 1> /dev/null
         open htmlcov/index.html
     else if string match "$current_os" "Linux"
         gio open htmlcov/index.html
