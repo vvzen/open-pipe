@@ -8,8 +8,14 @@ log = openpipe.log.get_logger("config")
 
 
 class MalformedConfigError(Exception):
-    """Used to describe that a configuration doesn't have all the required keys.
+    """Describes a configuration doesn't have all the required keys.
     """
+
+
+class ConfigNotFoundError(Exception):
+    """We looked for a configuration, but we couldn't find it.
+    """
+
 
 def get_config_path(name):
 
@@ -19,12 +25,16 @@ def get_config_path(name):
                                "can't search for configs!")
 
     matching_files = []
-    paths_to_search = current_config_path.split(":")
+    paths_to_search = current_config_path.split(os.pathsep)
 
     for path in paths_to_search[::-1]:
+
+        if not path:
+            continue
+
         if not os.path.exists(path):
             log.warning("Skipping non-existent path "
-                        "in OPENPIPE_CONFIG_PATH: %s", path)
+                        "in OPENPIPE_CONFIG_PATH: '%s'", path)
             continue
 
         files = [
@@ -42,7 +52,7 @@ def get_config_path(name):
               matching_files)
 
     if not matching_files:
-        raise OSError("No config files found with name: %s" % name)
+        raise ConfigNotFoundError("No config files found with name: %s" % name)
 
     return matching_files[0]
 
