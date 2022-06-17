@@ -1,7 +1,7 @@
 import pytest
 
 import openpipe.config
-from openpipe.config import ConfigNotFoundError
+from openpipe.error import NotFoundError
 
 
 def test_get_config_path_when_missing_env_var(monkeypatch):
@@ -13,5 +13,5 @@ def test_get_config_path_when_missing_env_var(monkeypatch):
 
 
 def test_get_config_path_with_nonexistent_config_name():
-    with pytest.raises(ConfigNotFoundError):
+    with pytest.raises(NotFoundError):
         openpipe.config.get_config("a_non_existent_config_name")

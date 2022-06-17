@@ -3,17 +3,13 @@ import os
 import tomli
 
 import openpipe.log
+from openpipe.error import NotFoundError
 
 log = openpipe.log.get_logger("config")
 
 
 class MalformedConfigError(Exception):
     """Describes a configuration doesn't have all the required keys.
-    """
-
-
-class ConfigNotFoundError(Exception):
-    """We looked for a configuration, but we couldn't find it.
     """
 
 
@@ -52,7 +48,7 @@ def get_config_path(name):
               matching_files)
 
     if not matching_files:
-        raise ConfigNotFoundError("No config files found with name: %s" % name)
+        raise NotFoundError("No config files found with name: %s" % name)
 
     return matching_files[0]
 
