@@ -3,6 +3,7 @@ import dataclasses
 
 import openpipe.naming
 
+
 @dataclasses.dataclass
 class OpenPipeContext:
     show: str = None
@@ -19,6 +20,9 @@ def make_context_from_path(path):
     :return: the retrieved context
     :rtype: OpenPipeContext
     """
+
+    if not path:
+        return OpenPipeContext()
 
     shots_regexes = openpipe.naming.get_naming_regexes("shot")
     sequence_regexes = openpipe.naming.get_naming_regexes("sequence")
