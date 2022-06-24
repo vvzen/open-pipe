@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -rf $REZ_BUILD_INSTALL_PATH
+cp -r $REZ_BUILD_SOURCE_PATH/openpipe $REZ_BUILD_INSTALL_PATH
+echo "Target install path: $REZ_BUILD_INSTALL_PATH"
+echo "Copied $(ls $REZ_BUILD_INSTALL_PATH | wc -l) files"
