@@ -63,9 +63,10 @@ $ cd open-pipe
 $ source openpipe/source_me.fish
 
 # Set your custom alias
+# (replace DOWNLOADED_FILE with the proper path)
 $ set DOWNLOADED_FILE bin/op/op.fish
 $ echo "# OpenPipe" >> ~/.config/fish/config.fish
-$ echo "alias op='source $DOWNLOADED_FILE" >> ~/.config/fish/config.fish
+$ echo "alias op='source $DOWNLOADED_FILE'" >> ~/.config/fish/config.fish
 
 # Check if everything is working fine
 $ op go .
