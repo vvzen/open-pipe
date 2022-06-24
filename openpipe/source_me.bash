@@ -1,12 +1,7 @@
 # Source this file to append the components of this library to the relevant paths
 
-echo $0
-
-this_dir=$(realpath $(dirname $0))
+this_dir=$(realpath $(dirname $BASH_SOURCE))
 new_python_path="$this_dir"
-
-echo $this_dir
-exit 0
 
 if [ -z "$PYTHONPATH" ]; then
     export PYTHONPATH="$new_python_path"
@@ -24,7 +19,7 @@ new_config_path="$this_dir/openpipe/configs"
 if [ -z "$OPENPIPE_CONFIG_PATH" ]; then
     export OPENPIPE_CONFIG_PATH="$new_config_path"
 else
-    config_path_already_appended=$(echo $OPENPIPE_CONFIG_PATH | grep $config_path_already_appended -c)
+    config_path_already_appended=$(echo $OPENPIPE_CONFIG_PATH | grep $new_config_path -c)
     if [[ $config_path_already_appended == "1" ]]; then
         echo "OPENPIPE_CONFIG_PATH is already set correctly, skipping"
     else
