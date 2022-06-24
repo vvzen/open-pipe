@@ -35,6 +35,9 @@ def print_tree(input_dir, options=None, max_level=3, _current_level=1):
     if not options:
         options = PrintTreeOptions()
 
+    if _current_level == 1:
+        print(input_dir)
+
     entries = os.listdir(input_dir)
 
     directories = sorted([
