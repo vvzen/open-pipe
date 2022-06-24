@@ -3,11 +3,11 @@
 
 import os
 import traceback
-import subprocess
 
 import openpipe.log
 import openpipe.config
 import openpipe.show_scheme.core
+from openepipe.filesystem import print_tree
 from openpipe.sanitization.core import name_for_filesystem
 
 log = openpipe.log.get_logger('openpipe.show')
@@ -43,7 +43,7 @@ def create_show_on_disk(show_name, root_path):
 
     openpipe.show_scheme.core.create_project(show_name, root_path)
     log.info("Result on disk (first 4 levels) :")
-    subprocess.check_call(["tree", "-dupg", "-L", "4", show_path])
+    print_tree(show_path, max_level=4)
 
 
 def setup_ocio_for_show(show_name, root_path):
