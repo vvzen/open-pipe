@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /net/pipeline/etc/bashrc
+
 # Clean up paths
 export PYTHONPATH=""
 export OPENPIPE_CONFIG_PATH=""
@@ -18,7 +20,7 @@ if [ -n "$GITHUB_ACTION" ]; then
     poetry run pytest tests --cov=openpipe --cov-report=xml
 # Or on Gitlab?
 elif [ -n "$CI" ]; then
-    poetry run  pytest tests --cov=openpipe --cov-report=xml
+    python3 -m pytest tests --cov=openpipe --cov-report=xml
 # Or locally?
 else
     # Uncomment for capturing stdout even on passed tests
