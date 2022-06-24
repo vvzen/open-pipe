@@ -7,12 +7,14 @@ import os
 
 class PrintTreeOptions(object):
 
-    def __init__(self):
-        self.show_dirs = True
-        self.show_files = True
-        self.show_symlinks = True
-        self.show_hidden_files = False
-        self.show_hidden_dirs = False
+    def __init__(self, show_dirs=True, show_files=True, show_symlinks=True,
+                 show_hidden_files=False, show_hidden_dirs=False):
+
+        self.show_dirs = show_dirs
+        self.show_files = show_files
+        self.show_symlinks = show_symlinks
+        self.show_hidden_files = show_hidden_files
+        self.show_hidden_dirs = show_hidden_dirs
 
 
 def print_tree(input_dir, options=None, max_level=3, _current_level=1):
@@ -41,7 +43,8 @@ def print_tree(input_dir, options=None, max_level=3, _current_level=1):
     ])
     files = sorted([
         f for f in entries
-        if os.path.isfile(os.path.join(input_dir, f))
+        if os.path.isfile(os.path.join(input_dir, f)) or
+        os.path.islink(os.path.join(input_dir, f))
     ])
 
     num_files = 0
