@@ -1,0 +1,23 @@
+variables:
+  GIT_STRATEGY: clone
+
+stages:
+  - test
+
+default:
+  before_script:
+    - ls -hal
+    - hostname
+    - whoami
+    - echo "PATH:"
+    - echo $PATH | tr ":" "\n"
+    - echo "SHELL = $SHELL"
+
+run-tests:
+  tags:
+    - pipeline
+  stage: test
+  script:
+    - bash ./run_tests.bash
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
