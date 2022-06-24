@@ -7,7 +7,7 @@ import traceback
 import openpipe.log
 import openpipe.config
 import openpipe.show_scheme.core
-from openepipe.filesystem import print_tree
+from openpipe.filesystem import print_tree
 from openpipe.sanitization.core import name_for_filesystem
 
 log = openpipe.log.get_logger('openpipe.show')
