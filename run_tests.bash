@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 source /net/pipeline/etc/bashrc
 
