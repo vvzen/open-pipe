@@ -52,6 +52,9 @@ $ brew install fish
 $ curl -sSL https://install.python-poetry.org | python3 -
 $ poetry completions fish > ~/.config/fish/completions/poetry.fish
 
+# Switch to using fish as a shell
+$ fish
+
 # Clone the repo
 $ git clone git@github.com:vvzen/open-pipe.git
 
