@@ -2,6 +2,9 @@ import os
 import openpipe.show
 from openpipe.config import get_config
 
+# TODO: update functions documentation
+
+
 def get_template(name):
 
     templates = get_config("templates")
