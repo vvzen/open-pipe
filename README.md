@@ -119,3 +119,22 @@ Search path of the configuration files (.toml) used by OpenPipe.
 
 By default, when doing a `op go` to any directory, if there's a `openpipe/etc/config` directory below your current directory, it will be prepended to your `OPENPIPE_CONFIG_PATH`.
 If there is none above, `op go` will start walking up from your cwd tries to set one.
+
+## Hooks
+
+Since OpenPipe tries to stay away from being too opinionated, it lets you define custom behaviour via hooks.
+In your `PYTHONPATH`, you can have a package called `openpipe_hooks`, where you can host your own business logic for different things. Just be sure your own `openpipe_hooks` package comes before the default openpipe one (so prepend it, not append it). Right now, there are 3 entry points for defining custom behaviours: `env_vars`, `ftrack`, `ocio` (see https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks) .
+
+For example, if you want to customize how OCIO is setup at show creation, you can write your own implementation, and host it in a package called `openpipe_hooks.ocio` inside a function called `setup_ocio_for_show`. This way, when the show creation runs (via `op-show create`) your implementation will be called instead of the default one offered by OpenPipe.
+
+Hooks are a powerful mechanism that let you take control over the aspects of your pipeline that can't be standardize, while letting OpenPipe take care of the boilerplate code around them.
+
+For a list of all the hooks and functions that you can override, see: https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks
+
+
+
+
+
+
+
+https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks
