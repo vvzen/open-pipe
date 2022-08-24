@@ -130,11 +130,3 @@ For example, if you want to customize how OCIO is setup at show creation, you ca
 Hooks are a powerful mechanism that let you take control over the aspects of your pipeline that can't be standardize, while letting OpenPipe take care of the boilerplate code around them.
 
 For a list of all the hooks and functions that you can override, see: https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks
-
-
-
-
-
-
-
-https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks
