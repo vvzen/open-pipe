@@ -123,10 +123,10 @@ If there is none above, `op go` will start walking up from your cwd tries to set
 ## Hooks
 
 Since OpenPipe tries to stay away from being too opinionated, it lets you define custom behaviour via hooks.
-In your `PYTHONPATH`, you can have a package called `openpipe_hooks`, where you can host your own business logic for different things. Just be sure your own `openpipe_hooks` package comes before the default openpipe one (so prepend it, not append it). Right now, there are 3 entry points for defining custom behaviours: `env_vars`, `ftrack`, `ocio` (see https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks) .
+In your `PYTHONPATH`, you can have a package called `openpipe_hooks`, where you can host your own business logic for different things. Just be sure that in your `sys.path` your own `openpipe_hooks` package comes before the default one hosted here in this repo. Right now, there are 3 entry points for defining custom behaviours: `env_vars`, `ftrack`, `ocio`.
 
-For example, if you want to customize how OCIO is setup at show creation, you can write your own implementation, and host it in a package called `openpipe_hooks.ocio` inside a function called `setup_ocio_for_show`. This way, when the show creation runs (via `op-show create`) your implementation will be called instead of the default one offered by OpenPipe.
+For example, if you want to customize how OCIO is setup at show creation, you can write your own implementation, and host it in a package called `openpipe_hooks.ocio` inside a function called `setup_ocio_for_show()`. If you want to implement show creation on ftrack, just write the implementation inside `create_project()` in `openpipe_hooks.ftrack`. This way, when the show creation runs (via `op-show create`) your implementation will be called instead of the default one offered by OpenPipe.
 
-Hooks are a powerful mechanism that let you take control over the aspects of your pipeline that can't be standardize, while letting OpenPipe take care of the boilerplate code around them.
+Hooks are a powerful mechanism that lets you take control over the aspects of your pipeline that can't be standardize, while letting OpenPipe take care of the boilerplate code around them.
 
-For a list of all the hooks and functions that you can override, see: https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks
+For a list of all the hooks and functions that you can override, see: https://github.com/vvzen/open-pipe/tree/main/openpipe_hooks .
