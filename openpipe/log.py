@@ -36,6 +36,8 @@ def user_requested_custom_formatting():
     if not env_var:
         return
 
+    # FIXME: this assumes that the user didn't add spaces in the formatting
+    # We should split by the log level, instead
     tokens = env_var.split(" ")
     num_tokens = len(tokens)
 
@@ -62,16 +64,17 @@ class CustomFormatter(logging.Formatter):
     def __init__(self):
         formatter_string = ("%(asctime)s: %(message)s")
 
-        # Use the provided formatting, if the user asked for it
         custom_formatting = user_requested_custom_formatting()
-        if custom_formatting:
-            formatter_string = custom_formatting
-        # If we're debugging and nothing custom was asked, use something a bit
-        # more descriptive anyway
+
+        # If we're debugging, use something a bit more descriptive as a starter
         user_level = user_requested_custom_logging_level()
         if user_level == logging.DEBUG:
             formatter_string = ("%(asctime)s-%(filename)s:"
                                 "%(lineno)s@%(funcName)s() : %(message)s")
+
+        # Use the provided formatting, if the user asked for it
+        if custom_formatting:
+            formatter_string = custom_formatting
 
         colors_map = {
             logging.DEBUG: self.blue,
