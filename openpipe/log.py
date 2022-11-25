@@ -57,7 +57,7 @@ class CustomFormatter(logging.Formatter):
         [30 + n for n in range(8)]
 
     # To test this code, run something like:
-    # print(COLOR_SEQ % (30 + RED) + "hello" + RESET_SEQ)
+    # print(f"{COLOR_SEQ % red}hello{RESET_SEQ}");
 
     def __init__(self):
         formatter_string = ("%(asctime)s: %(message)s")
